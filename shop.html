@@ -178,7 +178,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2.5rem;
-            padding: 2rem 0 5rem;
+            padding: 2rem 0 3rem;
         }
         .product-card {
             background: rgba(255,255,255,0.02);
@@ -248,9 +248,7 @@
             transform: scale(0.95);
             transition: transform 0.3s ease;
         }
-        .modal-overlay.active .modal-content {
-            transform: scale(1);
-        }
+        .modal-overlay.active .modal-content { transform: scale(1); }
         .modal-close {
             position: sticky;
             top: 0;
@@ -318,17 +316,292 @@
         .modal-content::-webkit-scrollbar-track { background: transparent; }
         .modal-content::-webkit-scrollbar-thumb { background: #6d3bff; border-radius: 20px; }
 
+        /* ===== REVIEWS CAROUSEL ===== */
+        .reviews-section {
+            padding: 2rem 0 4rem;
+            position: relative;
+        }
+        .reviews-section .section-title {
+            text-align: center;
+        }
+        .reviews-section .section-sub {
+            text-align: center;
+            margin: 0 auto 2rem;
+        }
+        .carousel-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .carousel-slide {
+            min-width: 100%;
+            padding: 0 1rem;
+        }
+        .review-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 2rem;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: 0.3s ease;
+        }
+        .review-card:hover {
+            border-color: rgba(160,122,255,0.2);
+            transform: translateY(-4px);
+        }
+        .review-card .stars {
+            color: #f5b342;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+        }
+        .review-card .review-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #cbc4dc;
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        .review-card .review-author {
+            color: #a07aff;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .review-card .review-role {
+            color: #8d85a3;
+            font-size: 0.85rem;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #cbc4dc;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.3s ease;
+            z-index: 5;
+        }
+        .carousel-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(160,122,255,0.3);
+            color: #f0edf5;
+        }
+        .carousel-btn.prev { left: -10px; }
+        .carousel-btn.next { right: -10px; }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.6rem;
+            margin-top: 1.5rem;
+        }
+        .carousel-dots span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+        .carousel-dots span.active {
+            background: #a07aff;
+            width: 28px;
+            border-radius: 10px;
+        }
+
+        /* ===== PAYMENT MODAL ===== */
+        .payment-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(16px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .payment-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .payment-modal {
+            background: #14111c;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 2.5rem;
+            max-width: 550px;
+            width: 100%;
+            padding: 2.5rem;
+            position: relative;
+            box-shadow: 0 40px 80px -20px rgba(0,0,0,0.9);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        .payment-overlay.active .payment-modal { transform: scale(1); }
+        .payment-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.8rem;
+            color: #8d85a3;
+            cursor: pointer;
+            transition: 0.2s;
+            background: none;
+            border: none;
+        }
+        .payment-close:hover { color: #f0edf5; transform: rotate(90deg); }
+        .payment-modal h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+        .payment-modal .total {
+            color: #a07aff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        .payment-option {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 1.2rem;
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            transition: 0.3s ease;
+            cursor: pointer;
+        }
+        .payment-option:hover {
+            border-color: rgba(160,122,255,0.3);
+            background: rgba(255,255,255,0.06);
+            transform: translateX(4px);
+        }
+        .payment-option i {
+            font-size: 1.8rem;
+            width: 2.5rem;
+            color: #a07aff;
+        }
+        .payment-option .info h4 {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .payment-option .info p {
+            color: #8d85a3;
+            font-size: 0.85rem;
+        }
+        .payment-option .badge {
+            margin-left: auto;
+            background: rgba(160,122,255,0.12);
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            color: #c6b1ff;
+        }
+        .payment-secure {
+            text-align: center;
+            margin-top: 1.2rem;
+            color: #67607a;
+            font-size: 0.85rem;
+        }
+        .payment-secure i { color: #4ade80; margin-right: 0.3rem; }
+
+        /* ===== DISCORD WIDGET ===== */
+        #discord-widget {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+            background: #2c2f33;
+            border-radius: 1.2rem;
+            padding: 0.8rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border: 1px solid rgba(255,255,255,0.06);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        #discord-widget:hover {
+            transform: scale(1.05);
+            border-color: #5865F2;
+        }
+        #discord-widget i {
+            font-size: 2rem;
+            color: #5865F2;
+        }
+        #discord-widget .discord-info .status {
+            color: #4ade80;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        #discord-widget .discord-info .status::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        #discord-widget .discord-info p {
+            color: #f0edf5;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
         footer { padding: 2rem 0; text-align: center; color: #67607a; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.03); }
         footer a { color: #a07aff; text-decoration: none; transition: 0.2s; }
         footer a:hover { color: #c6b1ff; }
 
-        @media (max-width: 900px) { .section-title { font-size: 2.2rem; } .nav-links { gap: 1.2rem; } }
+        @media (max-width: 900px) {
+            .section-title { font-size: 2.2rem; }
+            .nav-links { gap: 1.2rem; }
+            .carousel-btn.prev { left: 0; }
+            .carousel-btn.next { right: 0; }
+        }
         @media (max-width: 600px) {
             .container { padding: 0 1.2rem; }
             .nav-links { display: none; }
             .product-grid { grid-template-columns: 1fr; }
             .modal-content { padding: 1.5rem; margin: 1rem; }
             .shop-header { padding: 2rem 0 0.5rem; }
+            .payment-modal { padding: 1.5rem; margin: 1rem; }
+            #discord-widget { bottom: 1rem; right: 1rem; padding: 0.6rem 1rem; }
+            #discord-widget i { font-size: 1.5rem; }
+            #discord-widget .discord-info p { font-size: 0.8rem; }
+            .carousel-btn { width: 32px; height: 32px; font-size: 0.9rem; }
         }
 
         .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.7s cubic-bezier(0.2,0.9,0.3,1), transform 0.7s cubic-bezier(0.2,0.9,0.3,1); }
@@ -343,12 +616,22 @@
     <div class="bg-glow"></div>
     <div class="bg-glow-2"></div>
 
+    <!-- DISCORD WIDGET -->
+    <a href="https://discord.gg/NsKZASjYT4" target="_blank" id="discord-widget">
+        <i class="fab fa-discord"></i>
+        <div class="discord-info">
+            <p>Join our Discord</p>
+            <span class="status">Live support</span>
+        </div>
+    </a>
+
     <nav>
         <div class="container nav-inner">
             <div class="logo"><i class="fas fa-moon"></i> nightfall</div>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="#shop">Shop</a></li>
+                <li><a href="#reviews">Reviews</a></li>
                 <li><a href="https://discord.gg/NsKZASjYT4" target="_blank" class="discord-btn"><i class="fab fa-discord"></i> Discord</a></li>
             </ul>
         </div>
@@ -392,11 +675,102 @@
         </div>
     </div>
 
-    <!-- MODAL -->
+    <!-- ===== REVIEWS CAROUSEL ===== -->
+    <section class="reviews-section container" id="reviews">
+        <div class="fade-up">
+            <h2 class="section-title">What our clients say</h2>
+            <p class="section-sub">Real feedback from the community.</p>
+        </div>
+        <div class="carousel-container">
+            <div class="carousel-track" id="carouselTrack">
+                <!-- Slide 1 -->
+                <div class="carousel-slide">
+                    <div class="review-card">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="review-text">"Nightfall delivered my custom script in under 2 hours. The quality was insane — worked perfectly on the first try."</p>
+                        <div class="review-author">DevLynx</div>
+                        <div class="review-role">Game Developer</div>
+                    </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="carousel-slide">
+                    <div class="review-card">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="review-text">"The graphics pack was exactly what I needed. Clean, modern, and the customer support was top-notch."</p>
+                        <div class="review-author">pixelVibe</div>
+                        <div class="review-role">Content Creator</div>
+                    </div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="carousel-slide">
+                    <div class="review-card">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="review-text">"Fast, professional, and the Discord community is awesome. Best service I've used, hands down."</p>
+                        <div class="review-author">Synthx</div>
+                        <div class="review-role">Pro Player</div>
+                    </div>
+                </div>
+                <!-- Slide 4 -->
+                <div class="carousel-slide">
+                    <div class="review-card">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p class="review-text">"The BO7 chair is unreal — silent aim and ESP are flawless. My KD has never been higher. 10/10."</p>
+                        <div class="review-author">xRage</div>
+                        <div class="review-role">Competitive Player</div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-btn prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-btn next" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+            <div class="carousel-dots" id="carouselDots"></div>
+        </div>
+    </section>
+
+    <!-- ===== MODAL ===== -->
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()">✕</button>
             <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- ===== PAYMENT MODAL ===== -->
+    <div class="payment-overlay" id="paymentModal">
+        <div class="payment-modal">
+            <button class="payment-close" onclick="closePayment()">✕</button>
+            <h2>Choose payment method</h2>
+            <div class="total">Total: <span id="payment-total">$9.99</span></div>
+
+            <div class="payment-option" onclick="selectPayment('Shopier', 'Turkish Credit Card')">
+                <i class="fas fa-credit-card"></i>
+                <div class="info">
+                    <h4>Turkish Credit Card</h4>
+                    <p>Pay securely with Turkish debit or credit card via Shopier.</p>
+                </div>
+                <span class="badge">SHOPIER</span>
+            </div>
+
+            <div class="payment-option" onclick="selectPayment('Global', 'Global Card')">
+                <i class="fas fa-globe"></i>
+                <div class="info">
+                    <h4>Global Card</h4>
+                    <p>Visa, Mastercard and international cards — worldwide.</p>
+                </div>
+                <span class="badge">GLOBAL</span>
+            </div>
+
+            <div class="payment-option" onclick="selectPayment('Sellhub', 'Cryptocurrency')">
+                <i class="fab fa-bitcoin"></i>
+                <div class="info">
+                    <h4>Cryptocurrency</h4>
+                    <p>Pay with Bitcoin, USDT, ETH and more via SellHub checkout.</p>
+                </div>
+                <span class="badge">SELLHUB</span>
+            </div>
+
+            <div class="payment-secure">
+                <i class="fas fa-lock"></i> Secure payment – your information is encrypted
+            </div>
         </div>
     </div>
 
@@ -494,7 +868,7 @@
                     <div class="price-item"><span>Pricing:</span> ${p.pricing}</div>
                 </div>
                 ${featuresHTML}
-                <a href="${p.buyLink}" target="_blank" class="btn-primary" style="margin-top: 0.5rem;">
+                <a href="#" onclick="openPayment('${p.buyLink}', '${p.pricing}')" class="btn-primary" style="margin-top: 0.5rem;">
                     Buy Now →
                 </a>
             `;
@@ -514,6 +888,89 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeModal();
         });
+
+        // ===== PAYMENT MODAL =====
+        let paymentProductLink = '';
+
+        function openPayment(link, price) {
+            paymentProductLink = link;
+            document.getElementById('payment-total').textContent = price || '$9.99';
+            document.getElementById('paymentModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePayment() {
+            document.getElementById('paymentModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function selectPayment(method, name) {
+            const url = paymentProductLink + '?payment=' + encodeURIComponent(method);
+            window.open(url, '_blank');
+            closePayment();
+        }
+
+        document.getElementById('paymentModal').addEventListener('click', function(e) {
+            if (e.target === this) closePayment();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closePayment();
+        });
+
+        // ===== REVIEWS CAROUSEL =====
+        const track = document.getElementById('carouselTrack');
+        const slides = track.querySelectorAll('.carousel-slide');
+        const dotsContainer = document.getElementById('carouselDots');
+        let currentIndex = 0;
+        let totalSlides = slides.length;
+        let autoSlideInterval;
+
+        // Create dots
+        slides.forEach((_, i) => {
+            const dot = document.createElement('span');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        });
+        const dots = dotsContainer.querySelectorAll('span');
+
+        function goToSlide(index) {
+            if (index < 0) index = totalSlides - 1;
+            if (index >= totalSlides) index = 0;
+            currentIndex = index;
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
+            });
+        }
+
+        function nextSlide() { goToSlide(currentIndex + 1); }
+        function prevSlide() { goToSlide(currentIndex - 1); }
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            nextSlide();
+            resetAutoSlide();
+        });
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            prevSlide();
+            resetAutoSlide();
+        });
+
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(nextSlide, 5000);
+        }
+
+        function resetAutoSlide() {
+            clearInterval(autoSlideInterval);
+            startAutoSlide();
+        }
+
+        startAutoSlide();
+
+        // Pause on hover
+        const carouselContainer = document.querySelector('.carousel-container');
+        carouselContainer.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+        carouselContainer.addEventListener('mouseleave', startAutoSlide);
 
         // ===== FADE-UP =====
         const faders = document.querySelectorAll('.fade-up');
