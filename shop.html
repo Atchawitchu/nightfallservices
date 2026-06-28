@@ -1,1 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Nightfall · Shop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0b0a0f; color: #f0edf5; line-height: 1.6; overflow-x: hidden; }
 
+        .bg-glow { position: fixed; top: -20%; left: -10%; width: 70%; height: 80%; background: radial-gradient(ellipse at 30% 20%, rgba(100,40,255,0.20) 0%, transparent 60%); z-index: -2; filter: blur(60px); animation: floatBg 18s ease-in-out infinite alternate; }
+        .bg-glow-2 { position: fixed; bottom: -10%; right: -10%; width: 60%; height: 70%; background: radial-gradient(ellipse at 70% 80%, rgba(180,70,255,0.15) 0%, transparent 55%); z-index: -2; filter: blur(70px); animation: floatBg 22s ease-in-out infinite alternate-reverse; }
+        @keyframes floatBg { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(4%,6%) scale(1.05); } }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #14111c; }
+        ::-webkit-scrollbar-thumb { background: #6d3bff; border-radius: 20px; }
+
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+        .section-title { font-size: 2.8rem; font-weight: 700; letter-spacing: -0.02em; background: linear-gradient(135deg, #c6b1ff, #a07aff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; }
+
+        nav { padding: 1.4rem 0; position: sticky; top: 0; z-index: 50; backdrop-filter: blur(18px); background: rgba(11,10,15,0.6); border-bottom: 1px solid rgba(255,255,255,0.02); }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+        .logo { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.03em; background: linear-gradient(135deg, #ddd4ff, #b694ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .logo i { margin-right: 6px; color: #a07aff; -webkit-text-fill-color: #a07aff; }
+        .nav-links { display: flex; gap: 2.4rem; align-items: center; list-style: none; }
+        .nav-links a { color: #cbc4dc; text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: 0.2s; }
+        .nav-links a:hover { color: #d6c8ff; }
+        .discord-btn { background: #5865F2; padding: 0.5rem 1.2rem; border-radius: 40px; color: #fff !important; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: 0.25s; }
+        .discord-btn:hover { background: #6d7af5; transform: scale(1.02); box-shadow: 0 0 20px rgba(88,101,242,0.3); }
+
+        .shop-header { padding: 3rem 0 1rem; }
+        .back-link { display: inline-block; margin-bottom: 1.5rem; color: #a07aff; text-decoration: none; font-weight: 500; }
+        .back-link:hover { color: #c6b1ff; }
+
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; padding: 2rem 0 5rem; }
+        .product-card { background: rgba(255,255,255,0.02); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.04); border-radius: 2rem; padding: 2rem 1.8rem; transition: 0.3s ease; display: flex; flex-direction: column; cursor: pointer; }
+        .product-card:hover { transform: translateY(-6px); border-color: rgba(160,122,255,0.3); box-shadow: 0 20px 40px -12px rgba(100,40,255,0.15); }
+        .product-card i { font-size: 3rem; color: #a07aff; margin-bottom: 1rem; }
+        .product-card h3 { font-weight: 700; font-size: 1.5rem; margin-bottom: 0.4rem; }
+        .product-card .description { color: #b1aac7; font-size: 0.95rem; margin-bottom: 1rem; flex-grow: 1; }
+        .product-tag { display: inline-block; margin: 0.5rem 0 1rem; background: rgba(160,122,255,0.12); padding: 0.2rem 1rem; border-radius: 30px; font-size: 0.8rem; color: #c6b1ff; font-weight: 500; align-self: flex-start; }
+        .product-pricing { margin: 0.5rem 0 1.2rem; color: #b1aac7; font-size: 1rem; line-height: 1.8; }
+        .product-pricing span { color: #d6c8ff; font-weight: 600; }
+        .btn-primary { background: linear-gradient(135deg, #7b4aff, #a07aff); border: none; padding: 0.7rem 1.8rem; border-radius: 60px; font-weight: 600; font-size: 0.95rem; color: #fff; transition: 0.25s; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 10px 30px -8px rgba(100,40,255,0.3); text-decoration: none; align-self: flex-start; margin-top: auto; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 40px -8px rgba(100,40,255,0.5); }
+
+        /* MODAL */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); z-index: 1000; justify-content: center; align-items: center; padding: 2rem; }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background: #14111c; border: 1px solid rgba(255,255,255,0.06); border-radius: 2.5rem; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 2.5rem; position: relative; box-shadow: 0 40px 80px -20px rgba(0,0,0,0.9); }
+        .modal-close { position: sticky; top: 0; float: right; font-size: 1.8rem; color: #8d85a3; cursor: pointer; transition: 0.2s; background: none; border: none; z-index: 10; }
+        .modal-close:hover { color: #f0edf5; transform: rotate(90deg); }
+        .modal-content .product-icon { font-size: 4rem; color: #a07aff; margin-bottom: 1rem; }
+        .modal-content h2 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .modal-content .modal-tag { display: inline-block; margin: 0.5rem 0 1rem; background: rgba(160,122,255,0.12); padding: 0.2rem 1rem; border-radius: 30px; font-size: 0.8rem; color: #c6b1ff; font-weight: 500; }
+        .modal-content .modal-description { color: #b1aac7; font-size: 1.05rem; margin-bottom: 1.5rem; line-height: 1.8; }
+        .modal-content .modal-pricing { background: rgba(255,255,255,0.03); border-radius: 1.2rem; padding: 1.2rem 1.5rem; margin-bottom: 1.8rem; display: flex; flex-wrap: wrap; gap: 1.2rem 2rem; }
+        .modal-content .modal-pricing span { color: #d6c8ff; font-weight: 600; }
+        .modal-content .modal-pricing .price-item { color: #b1aac7; font-size: 1rem; }
+        .modal-content .btn-primary { padding: 0.8rem 2.5rem; font-size: 1.1rem; text-decoration: none; display: inline-block; }
+
+        .feature-section { margin: 1.5rem 0; }
+        .feature-section h4 { color: #c6b1ff; font-size: 1.1rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .feature-section h4 i { color: #a07aff; }
+        .feature-section ul { list-style: none; padding-left: 0; }
+        .feature-section ul li { color: #b1aac7; font-size: 0.95rem; padding: 0.3rem 0 0.3rem 1.8rem; position: relative; line-height: 1.6; }
+        .feature-section ul li::before { content: "▸"; color: #a07aff; position: absolute; left: 0; }
+
+        .modal-content::-webkit-scrollbar { width: 4px; }
+        .modal-content::-webkit-scrollbar-track { background: transparent; }
+        .modal-content::-webkit-scrollbar-thumb { background: #6d3bff; border-radius: 20px; }
+
+        @media (max-width: 900px) { .section-title { font-size: 2.2rem; } .nav-links { gap: 1.2rem; } }
+        @media (max-width: 600px) { .container { padding: 0 1.2rem; } .nav-links { display: none; } .product-grid { grid-template-columns: 1fr; } .modal-content { padding: 1.5rem; margin: 1rem; } }
+        .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s cubic-bezier(0.2,0.9,0.3,1), transform 0.7s cubic-bezier(0.2,0.9,0.3,1); }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <div class="bg-glow"></div>
+    <div class="bg-glow-2"></div>
+
+    <nav>
+        <div class="container nav-inner">
+            <div class="logo"><i class="fas fa-moon"></i> nightfall</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#shop">Shop</a></li>
+                <li><a href="https://discord.gg/NsKZASjYT4" target="_blank" class="discord-btn"><i class="fab fa-discord"></i> Discord</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="shop-header container" id="shop">
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        <h2 class="section-title">Our Products</h2>
+        <p class="section-sub" style="color:#a29bb5; font-size:1.1rem;">Click any product for full details.</p>
+    </section>
+
+    <div class="container product-grid">
+
+        <!-- VGC Emulator -->
+        <div class="product-card fade-up" onclick="openModal('emulator')">
+            <i class="fas fa-gamepad"></i>
+            <h3>NightFall VGC Emulator</h3>
+            <p class="description">The #1 VGK + VGC Emulation Solution on the Market.</p>
+            <span class="product-tag">new</span>
+            <div class="product-pricing"><span>1 week:</span> $40 &nbsp;|&nbsp; <span>1 month:</span> $100</div>
+            <span style="color:#a07aff; font-size:0.85rem; margin-top:0.5rem;">Click for details →</span>
+        </div>
+
+        <!-- BO7/WZ Chair -->
+        <div class="product-card fade-up" onclick="openModal('bo7')">
+            <i class="fas fa-crown"></i>
+            <h3>BO7/WZ Internal Chair</h3>
+            <p class="description">🔥 THE BEST RAGE CHEAT ON THE MARKET 🔥</p>
+            <span class="product-tag">popular</span>
+            <div class="product-pricing"><span>1 day:</span> $12 &nbsp;|&nbsp; <span>1 week:</span> $27 &nbsp;|&nbsp; <span>1 month:</span> $52</div>
+            <span style="color:#a07aff; font-size:0.85rem; margin-top:0.5rem;">Click for details →</span>
+        </div>
+
+        <!-- MW19-B07 Chair -->
+        <div class="product-card fade-up" onclick="openModal('mw19')">
+            <i class="fas fa-crosshairs"></i>
+            <h3>MW19-B07 Internal Chair</h3>
+            <p class="description">Ultimate all-in-one enhancement tool for MW2, MW3, BO6, BO7 & Warzone.</p>
+            <span class="product-tag">hot</span>
+            <div class="product-pricing"><span>1 day:</span> $8 &nbsp;|&nbsp; <span>1 week:</span> $15 &nbsp;|&nbsp; <span>1 month:</span> $26</div>
+            <span style="color:#a07aff; font-size:0.85rem; margin-top:0.5rem;">Click for details →</span>
+        </div>
+
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <footer style="padding: 2rem 0; text-align: center; color: #67607a; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.03);">
+        <div class="container">
+            <p>© 2026 <a href="https://discord.gg/NsKZASjYT4" target="_blank" style="color:#a07aff; text-decoration:none;">Nightfall Services</a> — built with <i class="fas fa-heart" style="color:#a07aff;"></i></p>
+        </div>
+    </footer>
+
+    <script>
+        // ===== PRODUCT DATA =====
+        const products = {
+            emulator: {
+                name: "NightFall VGC Emulator",
+                icon: "fa-gamepad",
+                tag: "new",
+                pricing: "1 week: $40 | 1 month: $100",
+                buyLink: "https://nightfall.sellhub.cx/product/New-product",
+                description: `The #1 VGK + VGC Emulation Solution on the Market. Experience unrestricted gameplay with the industry's most trusted emulator. Designed to bypass common Valorant restrictions, this tool offers a seamless, stable, and user-friendly experience—allowing you to focus on your game without interruptions.`,
+                features: [
+                    { title: "Core Advantages", items: ["Full Motherboard Support – Functions flawlessly on locked systems, including ASUS, HP, and other restricted brands.", "Optimized for Modern Windows – Fully compatible with Windows 10 and 11, supporting builds all the way up to 25H2.", "Lightning-Fast Setup – Receive your license instantly and activate within seconds."] },
+                    { title: "What You Get", items: ["Eliminates common error codes: VAN 102, VAL 5, VAN 79, VAN 152, and VAN 1067.", "Operates smoothly alongside Vanguard without conflicts.", "Avoids VAN102-related temporary bans.", "Play Immediately – No system restart is required.", "Dedicated Sessions – Each user receives a unique, custom-tailored session for maximum reliability and performance.", "Bypasses TPM, Secure Boot, and HVCI checks—no annoying pop-ups.", "Broad compatibility with diverse hardware configurations.", "Safe & Reversible – Leaves no permanent changes to your system.", "Hassle-Free Installation – No need to reinstall Windows or flash your BIOS."] }
+                ]
+            },
+            bo7: {
+                name: "BO7/WZ NightFall Internal Chair",
+                icon: "fa-crown",
+                tag: "popular",
+                pricing: "1 day: $12 | 1 week: $27 | 1 month: $52",
+                buyLink: "https://nightfall.sellhub.cx/product/New-product3",
+                description: `🔥 THE BEST RAGE CHEAT ON THE MARKET 🔥 BO7/WZ internal chair with silent aim, spin bot, jitter, and full ESP. Dominate every lobby with zero mercy. Works on all Windows, launchers, and CPUs. Spoofer not included — grab GHOST separately.`,
+                features: [
+                    { title: "Compatibility", items: ["All Windows versions", "Steam, Battle.Net, GamePass", "AMD & Intel processors", "BO7 + Warzone"] },
+                    { title: "Aimbot", items: ["Silent Aim (Dev mode) • Mappable aim key", "Override key + override bone selection", "Aim FOV circle + color customization", "Smoothing • Prediction • Humanization"] },
+                    { title: "Targeting", items: ["Compensate sway • No recoil • Vis Check", "Skip knocked • Skip self-revive", "Aim friendlies • Target AI", "FOV angle • Bone selection • Aim distance", "Threat priority • Aim warning"] },
+                    { title: "ESP", items: ["Box • 3D Box • Health bar • Skeleton", "Name • Distance • Weapon name • Snap lines", "Compass (locks to FOV)", "Show AI • Show teammates • Show target"] },
+                    { title: "Visible / Non-Visible Toggles", items: ["Separate controls for visible and non-visible: Box • 3D Box • Skeleton • Name", "Distance • Weapon name • Snap lines", "AI • Teammates", "Target highlight color"] },
+                    { title: "Rage Mode (Dev mode required)", items: ["Spin Bot • Jitter • Pitch Override • 3rd Person"] },
+                    { title: "Profiles — 10 Save Slots", items: ["Slot 1–10 available for instant loadout switching"] }
+                ]
+            },
+            mw19: {
+                name: "MW19-B07 NightFall Internal Chair",
+                icon: "fa-crosshairs",
+                tag: "hot",
+                pricing: "1 day: $8 | 1 week: $15 | 1 month: $26",
+                buyLink: "https://nightfall.sellhub.cx/product/New-product11",
+                description: `The ultimate all-in-one enhancement tool for Modern Warfare 2, Modern Warfare 3, Black Ops 6, Black Ops 7, and Warzone. Packed with a fully customizable aimbot, comprehensive ESP suite, loot detection, and advanced profile management. Pair with a temporary spoofer for the complete experience.`,
+                features: [
+                    { title: "System & Platform Compatibility", items: ["Supports all Windows versions", "Fully compatible with Steam, Battle.Net, and GamePass", "Works with both AMD and Intel processors", "Note: Spoofer not included—best used alongside a temporary spoofer"] },
+                    { title: "Supported Titles", items: ["Modern Warfare 2 / Modern Warfare 3 / Black Ops 6 / Black Ops 7 / Warzone"] },
+                    { title: "Aimbot Configuration", items: ["Aim bone selection", "Customizable aim Field of View (FOV)", "Adjustable maximum engagement distance", "Recoil scale control", "X/Y axis smoothing with advanced smoothing algorithm", "Movement prediction for moving targets", "Bullet drop prediction with adjustable scale", "Deadzone configuration for controller precision", "Aim key binding presets", "Auto target selection with prioritization rules (e.g., closest target)", "Ignore downed targets toggle", "Master aimbot on/off control", "Recoil override function", "FOV circle display toggle", "Auto-targeting rule sets"] },
+                    { title: "ESP & Visual Overlays", items: ["Player ESP on/off control", "Bounding box overlays", "Skeleton overlay for player tracking", "Health indicator display", "Friendly/enemy identification labels", "Player name display toggle", "Line tracers for directional awareness", "NPC visibility toggle", "Downed player ESP display", "2D box overlays", "Occlusion detection system (see only visible enemies)", "Held weapon display indicator"] },
+                    { title: "Loot & Item ESP", items: ["Loot and item ESP with cash value indicators", "Specific item highlight rules for priority loot"] },
+                    { title: "HUD & Interface Customization", items: ["Custom crosshair display toggle", "Full HUD color customization", "Compass display toggle with background/outline customization", "Icon scale adjustment", "Maximum icon display distance control", "Friendly/enemy color presets", "Hidden player/NPC color tags"] },
+                    { title: "Advanced Features", items: ["SBMM bypass (MW2/MW3 only)", "Streaming protection mode (OBS/recording safe)", "Full feature unlock toggle", "FPS counter display", "Spectator warning system with count and name display", "Tooltip on/off option", "Feature restriction alert display", "Menu toggle key binding", "Loadout/class editor"] },
+                    { title: "Profile Management", items: ["Create, duplicate, and rename config profiles", "Reset to default settings", "Remove individual profiles or wipe all config data"] },
+                    { title: "Core Mechanics & Master Controls", items: ["Mouse input emulation", "Master FOV system toggle", "Visual validation checks", "Master smooth setting toggle", "Distance priority rule toggle"] }
+                ]
+            }
+        };
+
+        // ===== MODAL FUNCTIONS =====
+        function openModal(id) {
+            const p = products[id];
+            if (!p) return;
+            const modal = document.getElementById('modal');
+            const body = document.getElementById('modal-body');
+
+            let featuresHTML = '';
+            p.features.forEach(f => {
+                featuresHTML += `<div class="feature-section"><h4><i class="fas fa-chevron-circle-right"></i> ${f.title}</h4><ul>`;
+                f.items.forEach(item => { featuresHTML += `<li>${item}</li>`; });
+                featuresHTML += `</ul></div>`;
+            });
+
+            body.innerHTML = `
+                <i class="fas ${p.icon} product-icon"></i>
+                <h2>${p.name}</h2>
+                <span class="modal-tag">${p.tag}</span>
+                <p class="modal-description">${p.description}</p>
+                <div class="modal-pricing">
+                    <div class="price-item"><span>Pricing:</span> ${p.pricing}</div>
+                </div>
+                ${featuresHTML}
+                <a href="${p.buyLink}" target="_blank" class="btn-primary" style="margin-top: 0.5rem;">
+                    Buy Now →
+                </a>
+            `;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // ===== FADE-UP =====
+        const faders = document.querySelectorAll('.fade-up');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        faders.forEach(el => observer.observe(el));
+
+        // ===== CURSOR GLOW =====
+        const glow = document.createElement('div');
+        glow.style.cssText = 'position:fixed;width:280px;height:280px;background:radial-gradient(circle,rgba(140,80,255,0.12) 0%,transparent 70%);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);z-index:999;transition:opacity 0.15s;will-change:left,top;';
+        document.body.appendChild(glow);
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+        document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; });
+        document.addEventListener('mouseenter', () => { glow.style.opacity = '1'; });
+    </script>
+</body>
+</html>
