@@ -1,1 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Nightfall Services · Elevate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0a0f;
+            color: #f0edf5;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== ANIMATED BG ===== */
+        .bg-glow {
+            position: fixed;
+            top: -20%;
+            left: -10%;
+            width: 70%;
+            height: 80%;
+            background: radial-gradient(ellipse at 30% 20%, rgba(100, 40, 255, 0.20) 0%, transparent 60%);
+            z-index: -2;
+            filter: blur(60px);
+            animation: floatBg 18s ease-in-out infinite alternate;
+        }
+        .bg-glow-2 {
+            position: fixed;
+            bottom: -10%;
+            right: -10%;
+            width: 60%;
+            height: 70%;
+            background: radial-gradient(ellipse at 70% 80%, rgba(180, 70, 255, 0.15) 0%, transparent 55%);
+            z-index: -2;
+            filter: blur(70px);
+            animation: floatBg 22s ease-in-out infinite alternate-reverse;
+        }
+        @keyframes floatBg {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(4%, 6%) scale(1.05); }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #14111c; }
+        ::-webkit-scrollbar-thumb { background: #6d3bff; border-radius: 20px; }
+
+        /* ===== UTILITY ===== */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #c6b1ff, #a07aff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .section-sub {
+            color: #a29bb5;
+            font-size: 1.1rem;
+            max-width: 600px;
+        }
+
+        /* ===== NAV ===== */
+        nav {
+            padding: 1.4rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(18px);
+            background: rgba(11, 10, 15, 0.6);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.7rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #ddd4ff, #b694ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .logo i {
+            margin-right: 6px;
+            color: #a07aff;
+            -webkit-text-fill-color: #a07aff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.4rem;
+            align-items: center;
+            list-style: none;
+        }
+        .nav-links a {
+            color: #cbc4dc;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+        .nav-links a:hover {
+            color: #d6c8ff;
+        }
+        .discord-btn {
+            background: #5865F2;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            color: #fff !important;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.25s;
+        }
+        .discord-btn:hover {
+            background: #6d7af5;
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(88, 101, 242, 0.3);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 4rem 0 5rem;
+            position: relative;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, #b694ff, #7b4aff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #b1aac7;
+            margin: 1.6rem 0 2.4rem;
+            max-width: 480px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #7b4aff, #a07aff);
+            border: none;
+            padding: 0.9rem 2.6rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #fff;
+            transition: 0.25s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px -8px rgba(100, 40, 255, 0.3);
+            text-decoration: none;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px -8px rgba(100, 40, 255, 0.5);
+        }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0.9rem 2.2rem;
+            border-radius: 60px;
+            font-weight: 500;
+            color: #d6cee8;
+            transition: 0.25s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        .stat-item h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #d6c8ff;
+        }
+        .stat-item p {
+            color: #8d85a3;
+            font-size: 0.9rem;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 2.5rem;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8);
+        }
+        .hero-card .feature-row {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+        .hero-card .feature-row:last-child { border: 0; }
+        .hero-card i {
+            font-size: 1.8rem;
+            width: 2.4rem;
+            color: #a07aff;
+        }
+        .hero-card h4 {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .hero-card p {
+            color: #9f95b7;
+            font-size: 0.9rem;
+        }
+
+        /* ===== PRODUCTS ===== */
+        .products {
+            padding: 5rem 0;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            margin-top: 2.8rem;
+        }
+        .product-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 2rem;
+            padding: 2rem 1.8rem;
+            transition: 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(160, 122, 255, 0.3);
+            box-shadow: 0 20px 40px -12px rgba(100, 40, 255, 0.15);
+        }
+        .product-card i {
+            font-size: 2.4rem;
+            color: #a07aff;
+            margin-bottom: 1rem;
+        }
+        .product-card h3 {
+            font-weight: 700;
+            font-size: 1.4rem;
+            margin-bottom: 0.4rem;
+        }
+        .product-card p {
+            color: #b1aac7;
+            font-size: 0.95rem;
+        }
+        .product-tag {
+            display: inline-block;
+            margin-top: 1rem;
+            background: rgba(160, 122, 255, 0.12);
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            color: #c6b1ff;
+            font-weight: 500;
+        }
+
+        /* ===== REVIEWS ===== */
+        .reviews {
+            padding: 4rem 0;
+        }
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.8rem;
+            margin-top: 2rem;
+        }
+        .review-item {
+            background: rgba(255,255,255,0.02);
+            padding: 1.5rem;
+            border-radius: 1.8rem;
+            border: 1px solid rgba(255,255,255,0.02);
+        }
+        .review-item i {
+            color: #f5b342;
+            letter-spacing: 2px;
+        }
+        .review-item p {
+            font-style: italic;
+            color: #cbc4dc;
+            margin: 0.6rem 0;
+        }
+
+        /* ===== FAQ ===== */
+        .faq {
+            padding: 4rem 0 5rem;
+        }
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            max-width: 780px;
+            margin-top: 2rem;
+        }
+        .faq-item {
+            background: rgba(255,255,255,0.02);
+            border-radius: 1.8rem;
+            padding: 1.2rem 1.8rem;
+            border: 1px solid rgba(255,255,255,0.02);
+            transition: 0.2s;
+        }
+        .faq-item summary {
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            color: #ddd4ff;
+        }
+        .faq-item p {
+            margin-top: 0.8rem;
+            color: #b1aac7;
+            padding-left: 0.2rem;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            padding: 2.5rem 0;
+            border-top: 1px solid rgba(255,255,255,0.03);
+            text-align: center;
+            color: #67607a;
+            font-size: 0.9rem;
+        }
+        footer a {
+            color: #a07aff;
+            text-decoration: none;
+        }
+
+        /* ===== MOBILE ===== */
+        @media (max-width: 900px) {
+            .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .hero h1 { font-size: 2.8rem; }
+            .nav-links { gap: 1.2rem; }
+            .section-title { font-size: 2.2rem; }
+        }
+        @media (max-width: 600px) {
+            .container { padding: 0 1.2rem; }
+            .nav-links { display: none; }
+            .hero-stats { flex-wrap: wrap; gap: 1.2rem; }
+            .hero h1 { font-size: 2.2rem; }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.7s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background orbs -->
+    <div class="bg-glow"></div>
+    <div class="bg-glow-2"></div>
+
+    <!-- ===== NAV ===== -->
+    <nav>
+        <div class="container nav-inner">
+            <div class="logo"><i class="fas fa-moon"></i> nightfall</div>
+            <ul class="nav-links">
+                <li><a href="#products">Services</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="https://discord.gg/NsKZASjYT4" target="_blank" class="discord-btn"><i class="fab fa-discord"></i> Discord</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero container fade-up" id="hero">
+        <div class="hero-grid">
+            <div>
+                <h1>Elevating <span>your experience</span></h1>
+                <p>Premium tools, development, graphics & accounts — built for those who demand performance.</p>
+                <div class="hero-actions">
+                    <a href="https://discord.gg/NsKZASjYT4" target="_blank" class="btn-primary"><i class="fab fa-discord"></i> Join Discord</a>
+                    <button class="btn-secondary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Explore <i class="fas fa-arrow-right"></i></button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item"><h3>120+</h3><p>customers</p></div>
+                    <div class="stat-item"><h3>14</h3><p>products</p></div>
+                    <div class="stat-item"><h3>99%</h3><p>uptime</p></div>
+                </div>
+            </div>
+            <div class="hero-card">
+                <div class="feature-row">
+                    <i class="fas fa-code"></i>
+                    <div><h4>Game development</h4><p>Scripts, mods & tools</p></div>
+                </div>
+                <div class="feature-row">
+                    <i class="fas fa-paint-brush"></i>
+                    <div><h4>Graphics & design</h4><p>Logos, banners, UI</p></div>
+                </div>
+                <div class="feature-row">
+                    <i class="fas fa-user-astronaut"></i>
+                    <div><h4>Accounts & services</h4><p>Discord, gaming & more</p></div>
+                </div>
+                <div class="feature-row">
+                    <i class="fas fa-bolt"></i>
+                    <div><h4>Reliable delivery</h4><p>Fast, secure, 24/7</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PRODUCTS ===== -->
+    <section class="products container" id="products">
+        <div class="fade-up">
+            <h2 class="section-title">Our services</h2>
+            <p class="section-sub">Built for quality, backed by nightfall.</p>
+        </div>
+        <div class="product-grid">
+            <div class="product-card fade-up"><i class="fas fa-gamepad"></i><h3>Game dev</h3><p>Custom scripts, mods, and optimizations.</p><span class="product-tag">popular</span></div>
+            <div class="product-card fade-up"><i class="fas fa-palette"></i><h3>Graphics</h3><p>Logos, overlays, thumbnails, UI packs.</p><span class="product-tag">design</span></div>
+            <div class="product-card fade-up"><i class="fas fa-ticket-alt"></i><h3>Discord services</h3><p>Bots, servers, moderation, nitro.</p><span class="product-tag">community</span></div>
+            <div class="product-card fade-up"><i class="fas fa-user-cog"></i><h3>Accounts</h3><p>Gaming & platform accounts, safe & verified.</p><span class="product-tag">premium</span></div>
+        </div>
+    </section>
+
+    <!-- ===== REVIEWS ===== -->
+    <section class="reviews container" id="reviews">
+        <div class="fade-up">
+            <h2 class="section-title">What our clients say</h2>
+            <p class="section-sub">Real feedback from the community.</p>
+        </div>
+        <div class="review-grid">
+            <div class="review-item fade-up"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><p>"Nightfall delivered my custom script in under 2h. Insane quality."</p><span style="color:#8d85a3; font-size:0.85rem;">— DevLynx</span></div>
+            <div class="review-item fade-up"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><p>"The graphics pack was exactly what I needed. Clean, modern."</p><span style="color:#8d85a3; font-size:0.85rem;">— pixelVibe</span></div>
+            <div class="review-item fade-up"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><p>"Fast, professional, and the Discord community is awesome."</p><span style="color:#8d85a3; font-size:0.85rem;">— Synthx</span></div>
+        </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="faq container" id="faq">
+        <div class="fade-up">
+            <h2 class="section-title">Frequently asked</h2>
+            <p class="section-sub">Everything you need to know.</p>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item fade-up"><summary>How do I order?</summary><p>Join our Discord and open a ticket — we'll handle the rest.</p></div>
+            <div class="faq-item fade-up"><summary>What payment methods do you accept?</summary><p>PayPal, crypto, and Discord gift cards.</p></div>
+            <div class="faq-item fade-up"><summary>How fast is delivery?</summary><p>Most services are delivered within 24h, often same-day.</p></div>
+            <div class="faq-item fade-up"><summary>Do you offer refunds?</summary><p>Yes, we have a clear refund policy. Ask in Discord for details.</p></div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <p>© 2026 <a href="https://discord.gg/NsKZASjYT4" target="_blank">Nightfall Services</a> — built with <i class="fas fa-heart" style="color:#a07aff;"></i> for the community.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for fade-up animations
+        const faders = document.querySelectorAll('.fade-up');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        faders.forEach(el => observer.observe(el));
+
+        // Smooth cursor glow (optional)
+        const glow = document.createElement('div');
+        glow.style.cssText = 'position:fixed;width:280px;height:280px;background:radial-gradient(circle,rgba(140,80,255,0.12) 0%,transparent 70%);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);z-index:999;transition:opacity 0.15s;will-change:left,top;';
+        document.body.appendChild(glow);
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+        document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; });
+        document.addEventListener('mouseenter', () => { glow.style.opacity = '1'; });
+    </script>
+
+</body>
+</html>
