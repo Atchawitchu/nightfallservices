@@ -321,13 +321,8 @@
             padding: 2rem 0 4rem;
             position: relative;
         }
-        .reviews-section .section-title {
-            text-align: center;
-        }
-        .reviews-section .section-sub {
-            text-align: center;
-            margin: 0 auto 2rem;
-        }
+        .reviews-section .section-title { text-align: center; }
+        .reviews-section .section-sub { text-align: center; margin: 0 auto 2rem; }
         .carousel-container {
             position: relative;
             max-width: 800px;
@@ -457,18 +452,25 @@
             box-shadow: 0 40px 80px -20px rgba(0,0,0,0.9);
             transform: scale(0.95);
             transition: transform 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         .payment-overlay.active .payment-modal { transform: scale(1); }
+        .payment-modal::-webkit-scrollbar { width: 4px; }
+        .payment-modal::-webkit-scrollbar-track { background: transparent; }
+        .payment-modal::-webkit-scrollbar-thumb { background: #6d3bff; border-radius: 20px; }
+
         .payment-close {
-            position: absolute;
-            top: 1rem;
-            right: 1.5rem;
+            position: sticky;
+            top: 0;
+            float: right;
             font-size: 1.8rem;
             color: #8d85a3;
             cursor: pointer;
             transition: 0.2s;
             background: none;
             border: none;
+            z-index: 10;
         }
         .payment-close:hover { color: #f0edf5; transform: rotate(90deg); }
         .payment-modal h2 {
@@ -519,6 +521,7 @@
             border-radius: 30px;
             font-size: 0.7rem;
             color: #c6b1ff;
+            white-space: nowrap;
         }
         .payment-secure {
             text-align: center;
@@ -616,7 +619,6 @@
     <div class="bg-glow"></div>
     <div class="bg-glow-2"></div>
 
-    <!-- DISCORD WIDGET -->
     <a href="https://discord.gg/NsKZASjYT4" target="_blank" id="discord-widget">
         <i class="fab fa-discord"></i>
         <div class="discord-info">
@@ -644,7 +646,6 @@
     </section>
 
     <div class="container product-grid">
-        <!-- VGC Emulator -->
         <div class="product-card fade-up delay-1" onclick="openModal('emulator')">
             <i class="fas fa-gamepad"></i>
             <h3>NightFall VGC Emulator</h3>
@@ -654,7 +655,6 @@
             <span style="color:#a07aff; font-size:0.85rem; margin-top:0.5rem;">Click for details →</span>
         </div>
 
-        <!-- BO7/WZ Chair -->
         <div class="product-card fade-up delay-2" onclick="openModal('bo7')">
             <i class="fas fa-crown"></i>
             <h3>BO7/WZ Internal Chair</h3>
@@ -664,7 +664,6 @@
             <span style="color:#a07aff; font-size:0.85rem; margin-top:0.5rem;">Click for details →</span>
         </div>
 
-        <!-- MW19-B07 Chair -->
         <div class="product-card fade-up delay-3" onclick="openModal('mw19')">
             <i class="fas fa-crosshairs"></i>
             <h3>MW19-B07 Internal Chair</h3>
@@ -675,7 +674,6 @@
         </div>
     </div>
 
-    <!-- ===== REVIEWS CAROUSEL ===== -->
     <section class="reviews-section container" id="reviews">
         <div class="fade-up">
             <h2 class="section-title">What our clients say</h2>
@@ -683,7 +681,6 @@
         </div>
         <div class="carousel-container">
             <div class="carousel-track" id="carouselTrack">
-                <!-- Slide 1 -->
                 <div class="carousel-slide">
                     <div class="review-card">
                         <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
@@ -692,7 +689,6 @@
                         <div class="review-role">Game Developer</div>
                     </div>
                 </div>
-                <!-- Slide 2 -->
                 <div class="carousel-slide">
                     <div class="review-card">
                         <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
@@ -701,7 +697,6 @@
                         <div class="review-role">Content Creator</div>
                     </div>
                 </div>
-                <!-- Slide 3 -->
                 <div class="carousel-slide">
                     <div class="review-card">
                         <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
@@ -710,7 +705,6 @@
                         <div class="review-role">Pro Player</div>
                     </div>
                 </div>
-                <!-- Slide 4 -->
                 <div class="carousel-slide">
                     <div class="review-card">
                         <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
@@ -726,7 +720,6 @@
         </div>
     </section>
 
-    <!-- ===== MODAL ===== -->
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()">✕</button>
@@ -741,31 +734,85 @@
             <h2>Choose payment method</h2>
             <div class="total">Total: <span id="payment-total">$9.99</span></div>
 
-            <div class="payment-option" onclick="selectPayment('Shopier', 'Turkish Credit Card')">
+            <div class="payment-option" onclick="selectPayment('Moneymotion', 'Card to Crypto')">
+                <i class="fas fa-exchange-alt"></i>
+                <div class="info">
+                    <h4>Moneymotion</h4>
+                    <p>Connect your Moneymotion account (card to crypto). Requires specialized onboarding.</p>
+                </div>
+                <span class="badge">CRYPTO</span>
+            </div>
+
+            <div class="payment-option" onclick="selectPayment('PayPal F&F', 'PayPal Friends & Family')">
+                <i class="fab fa-paypal"></i>
+                <div class="info">
+                    <h4>PayPal Friends & Family (IPN)</h4>
+                    <p>Use PayPal IPN for receiving F&F or G&S payments.</p>
+                </div>
+                <span class="badge">PAYPAL</span>
+            </div>
+
+            <div class="payment-option" onclick="selectPayment('Stripe', 'Stripe')">
                 <i class="fas fa-credit-card"></i>
                 <div class="info">
-                    <h4>Turkish Credit Card</h4>
-                    <p>Pay securely with Turkish debit or credit card via Shopier.</p>
+                    <h4>Stripe</h4>
+                    <p>Connect your Stripe account.</p>
                 </div>
-                <span class="badge">SHOPIER</span>
+                <span class="badge">CARD</span>
             </div>
 
-            <div class="payment-option" onclick="selectPayment('Global', 'Global Card')">
-                <i class="fas fa-globe"></i>
+            <div class="payment-option" onclick="selectPayment('Sumup', 'Sumup')">
+                <i class="fas fa-mobile-alt"></i>
                 <div class="info">
-                    <h4>Global Card</h4>
-                    <p>Visa, Mastercard and international cards — worldwide.</p>
+                    <h4>Sumup</h4>
+                    <p>Connect your Sumup account.</p>
                 </div>
-                <span class="badge">GLOBAL</span>
+                <span class="badge">POS</span>
             </div>
 
-            <div class="payment-option" onclick="selectPayment('Sellhub', 'Cryptocurrency')">
-                <i class="fab fa-bitcoin"></i>
+            <div class="payment-option" onclick="selectPayment('Square', 'Square')">
+                <i class="fab fa-square"></i>
                 <div class="info">
-                    <h4>Cryptocurrency</h4>
-                    <p>Pay with Bitcoin, USDT, ETH and more via SellHub checkout.</p>
+                    <h4>Square</h4>
+                    <p>Connect your Square account.</p>
                 </div>
-                <span class="badge">SELLHUB</span>
+                <span class="badge">POS</span>
+            </div>
+
+            <div class="payment-option" onclick="selectPayment('Cryptomus', 'Cryptomus')">
+                <i class="fas fa-coins"></i>
+                <div class="info">
+                    <h4>Cryptomus</h4>
+                    <p>Connect your Cryptomus account.</p>
+                </div>
+                <span class="badge">CRYPTO</span>
+            </div>
+
+            <div class="payment-option" onclick="selectPayment('PayPal API', 'PayPal API')">
+                <i class="fab fa-paypal"></i>
+                <div class="info">
+                    <h4>PayPal by API</h4>
+                    <p>Connect PayPal's G&S API.</p>
+                </div>
+                <span class="badge">PAYPAL</span>
+            </div>
+
+            <div class="payment-option" onclick="selectPayment('Cash App', 'Cash App')">
+                <i class="fas fa-dollar-sign"></i>
+                <div class="info">
+                    <h4>Cash App</h4>
+                    <p>Connect your Cash App account.</p>
+                </div>
+                <span class="badge">APP</span>
+            </div>
+
+            <div class="payment-option" onclick="selectPayment('Customer Balance', 'Store Credit')">
+                <i class="fas fa-wallet"></i>
+                <div class="info">
+                    <h4>Customer Balance</h4>
+                    <p>Enable store credit / account balances for customers.</p>
+                </div>
+                <span class="badge">CREDIT</span>
             </div>
 
             <div class="payment-secure">
@@ -781,12 +828,10 @@
     </footer>
 
     <script>
-        // ===== PAGE LOAD =====
         window.addEventListener('load', function() {
             document.body.classList.add('loaded');
         });
 
-        // ===== NAV SCROLL =====
         window.addEventListener('scroll', function() {
             const nav = document.querySelector('nav');
             if (window.scrollY > 50) nav.classList.add('scrolled');
@@ -925,7 +970,6 @@
         let totalSlides = slides.length;
         let autoSlideInterval;
 
-        // Create dots
         slides.forEach((_, i) => {
             const dot = document.createElement('span');
             if (i === 0) dot.classList.add('active');
@@ -967,7 +1011,6 @@
 
         startAutoSlide();
 
-        // Pause on hover
         const carouselContainer = document.querySelector('.carousel-container');
         carouselContainer.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
         carouselContainer.addEventListener('mouseleave', startAutoSlide);
