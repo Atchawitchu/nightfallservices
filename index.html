@@ -108,9 +108,7 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.03);
             transition: background 0.3s ease;
         }
-        nav.scrolled {
-            background: rgba(11, 10, 15, 0.8);
-        }
+        nav.scrolled { background: rgba(11, 10, 15, 0.8); }
         .nav-inner { display: flex; align-items: center; justify-content: space-between; }
         .logo {
             font-size: 1.7rem;
@@ -164,8 +162,21 @@
         /* ===== HERO ===== */
         .hero { padding: 5rem 0 6rem; position: relative; }
         .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-        .hero h1 { font-size: 3.8rem; font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; }
+        .hero h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            min-height: 4.5rem;
+        }
         .hero h1 span { background: linear-gradient(135deg, #b694ff, #7b4aff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero h1 .typewriter {
+            display: inline-block;
+            border-right: 3px solid #a07aff;
+            padding-right: 5px;
+            animation: blink 0.8s step-end infinite;
+        }
+        @keyframes blink { 50% { border-color: transparent; } }
         .hero p { font-size: 1.2rem; color: #b1aac7; margin: 1.6rem 0 2.4rem; max-width: 480px; }
         .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
 
@@ -335,6 +346,164 @@
         .faq-item summary:hover { color: #c6b1ff; }
         .faq-item p { margin-top: 0.8rem; color: #b1aac7; padding-left: 0.2rem; }
 
+        /* ===== PAYMENT MODAL ===== */
+        .payment-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(16px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .payment-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .payment-modal {
+            background: #14111c;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 2.5rem;
+            max-width: 550px;
+            width: 100%;
+            padding: 2.5rem;
+            position: relative;
+            box-shadow: 0 40px 80px -20px rgba(0,0,0,0.9);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        .payment-overlay.active .payment-modal {
+            transform: scale(1);
+        }
+        .payment-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.8rem;
+            color: #8d85a3;
+            cursor: pointer;
+            transition: 0.2s;
+            background: none;
+            border: none;
+        }
+        .payment-close:hover { color: #f0edf5; transform: rotate(90deg); }
+        .payment-modal h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+        .payment-modal .total {
+            color: #a07aff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        .payment-option {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 1.2rem;
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            transition: 0.3s ease;
+            cursor: pointer;
+        }
+        .payment-option:hover {
+            border-color: rgba(160,122,255,0.3);
+            background: rgba(255,255,255,0.06);
+            transform: translateX(4px);
+        }
+        .payment-option i {
+            font-size: 1.8rem;
+            width: 2.5rem;
+            color: #a07aff;
+        }
+        .payment-option .info h4 {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .payment-option .info p {
+            color: #8d85a3;
+            font-size: 0.85rem;
+        }
+        .payment-option .badge {
+            margin-left: auto;
+            background: rgba(160,122,255,0.12);
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            color: #c6b1ff;
+        }
+        .payment-secure {
+            text-align: center;
+            margin-top: 1.2rem;
+            color: #67607a;
+            font-size: 0.85rem;
+        }
+        .payment-secure i { color: #4ade80; margin-right: 0.3rem; }
+
+        /* ===== DISCORD WIDGET ===== */
+        #discord-widget {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+            background: #2c2f33;
+            border-radius: 1.2rem;
+            padding: 0.8rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border: 1px solid rgba(255,255,255,0.06);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        #discord-widget:hover {
+            transform: scale(1.05);
+            border-color: #5865F2;
+        }
+        #discord-widget i {
+            font-size: 2rem;
+            color: #5865F2;
+        }
+        #discord-widget .discord-info .status {
+            color: #4ade80;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        #discord-widget .discord-info .status::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        #discord-widget .discord-info p {
+            color: #f0edf5;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
         /* ===== FOOTER ===== */
         footer { padding: 2.5rem 0; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; color: #67607a; font-size: 0.9rem; }
         footer a { color: #a07aff; text-decoration: none; transition: 0.2s; }
@@ -343,17 +512,21 @@
         /* ===== MOBILE ===== */
         @media (max-width: 900px) {
             .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .hero h1 { font-size: 2.8rem; }
+            .hero h1 { font-size: 2.8rem; min-height: 3.5rem; }
             .nav-links { gap: 1.2rem; }
             .section-title { font-size: 2.2rem; }
+            #discord-widget { bottom: 1rem; right: 1rem; padding: 0.6rem 1rem; }
         }
         @media (max-width: 600px) {
             .container { padding: 0 1.2rem; }
             .nav-links { display: none; }
             .hero-stats { flex-wrap: wrap; gap: 1.2rem; }
-            .hero h1 { font-size: 2.2rem; }
+            .hero h1 { font-size: 2.2rem; min-height: 3rem; }
             .product-grid { grid-template-columns: 1fr; }
             .hero { padding: 3rem 0 4rem; }
+            .payment-modal { padding: 1.5rem; margin: 1rem; }
+            #discord-widget .discord-info p { font-size: 0.8rem; }
+            #discord-widget i { font-size: 1.5rem; }
         }
 
         /* ===== ANIMATIONS ===== */
@@ -381,6 +554,15 @@
     <div class="bg-glow-2"></div>
     <div class="bg-glow-3"></div>
 
+    <!-- ===== DISCORD WIDGET ===== -->
+    <a href="https://discord.gg/NsKZASjYT4" target="_blank" id="discord-widget">
+        <i class="fab fa-discord"></i>
+        <div class="discord-info">
+            <p>Join our Discord</p>
+            <span class="status">Live support</span>
+        </div>
+    </a>
+
     <!-- ===== NAV ===== -->
     <nav>
         <div class="container nav-inner">
@@ -398,7 +580,10 @@
     <section class="hero container" id="hero">
         <div class="hero-grid">
             <div class="fade-up">
-                <h1>Elevating <span>your experience</span></h1>
+                <h1>
+                    <span id="typewriter-text"></span>
+                    <span class="typewriter">|</span>
+                </h1>
                 <p>Premium tools, development, graphics & accounts — built for those who demand performance.</p>
                 <div class="hero-actions">
                     <a href="https://discord.gg/NsKZASjYT4" target="_blank" class="btn-primary"><i class="fab fa-discord"></i> Join Discord</a>
@@ -473,8 +658,8 @@
             <p class="section-sub">Everything you need to know.</p>
         </div>
         <div class="faq-list">
-            <div class="faq-item fade-up"><summary>How do I order?</summary><p>Click "Buy Now" on any product — it'll take you to our secure store. Or join our Discord and open a ticket!</p></div>
-            <div class="faq-item fade-up"><summary>What payment methods do you accept?</summary><p>PayPal, crypto, and Discord gift cards — all processed securely through our store.</p></div>
+            <div class="faq-item fade-up"><summary>How do I order?</summary><p>Click "Buy Now" on any product — you'll choose your payment method, then complete checkout securely. Or join our Discord and open a ticket!</p></div>
+            <div class="faq-item fade-up"><summary>What payment methods do you accept?</summary><p>We accept Turkish Credit Card (Shopier), Global Cards (Visa/Mastercard), and Cryptocurrency (Bitcoin, USDT, ETH).</p></div>
             <div class="faq-item fade-up"><summary>How fast is delivery?</summary><p>Most services are delivered within 24h, often same-day after purchase.</p></div>
             <div class="faq-item fade-up"><summary>Do you offer refunds?</summary><p>Yes, we have a clear refund policy. Check our store or ask in Discord for details.</p></div>
         </div>
@@ -487,30 +672,84 @@
         </div>
     </footer>
 
-    <!-- ===== PARTICLES SCRIPT ===== -->
+    <!-- ===== PAYMENT MODAL ===== -->
+    <div class="payment-overlay" id="paymentModal">
+        <div class="payment-modal">
+            <button class="payment-close" onclick="closePayment()">✕</button>
+            <h2>Choose payment method</h2>
+            <div class="total">Total: <span id="payment-total">$9.99</span></div>
+
+            <div class="payment-option" onclick="selectPayment('Shopier', 'Turkish Credit Card')">
+                <i class="fas fa-credit-card"></i>
+                <div class="info">
+                    <h4>Turkish Credit Card</h4>
+                    <p>Pay securely with Turkish debit or credit card via Shopier.</p>
+                </div>
+                <span class="badge">SHOPIER</span>
+            </div>
+
+            <div class="payment-option" onclick="selectPayment('Global', 'Global Card')">
+                <i class="fas fa-globe"></i>
+                <div class="info">
+                    <h4>Global Card</h4>
+                    <p>Visa, Mastercard and international cards — worldwide.</p>
+                </div>
+                <span class="badge">GLOBAL</span>
+            </div>
+
+            <div class="payment-option" onclick="selectPayment('Sellhub', 'Cryptocurrency')">
+                <i class="fab fa-bitcoin"></i>
+                <div class="info">
+                    <h4>Cryptocurrency</h4>
+                    <p>Pay with Bitcoin, USDT, ETH and more via SellHub checkout.</p>
+                </div>
+                <span class="badge">SELLHUB</span>
+            </div>
+
+            <div class="payment-secure">
+                <i class="fas fa-lock"></i> Secure payment – your information is encrypted
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SCRIPTS ===== -->
     <script>
-        // ===== PAGE LOAD FADE-IN =====
+        // ===== PAGE LOAD =====
         window.addEventListener('load', function() {
             document.body.classList.add('loaded');
+            // Start typewriter after load
+            setTimeout(startTypewriter, 500);
         });
 
-        // ===== NAV SCROLL EFFECT =====
+        // ===== TYPEWRITER =====
+        function startTypewriter() {
+            const text = "Elevating your experience";
+            const element = document.getElementById('typewriter-text');
+            let i = 0;
+            const speed = 45;
+
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // ===== NAV SCROLL =====
         window.addEventListener('scroll', function() {
             const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
+            if (window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
         });
 
-        // ===== FADE-UP OBSERVER =====
+        // ===== FADE-UP =====
         const faders = document.querySelectorAll('.fade-up');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('visible');
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
         faders.forEach(el => observer.observe(el));
@@ -582,7 +821,6 @@
         function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => p.update());
-            // Draw connections
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
@@ -603,7 +841,38 @@
         }
         animateParticles();
 
-        // ===== CURSOR GLOW (optional enhancement) =====
+        // ===== PAYMENT MODAL =====
+        let paymentProductLink = '';
+
+        function openPayment(link, price) {
+            paymentProductLink = link;
+            document.getElementById('payment-total').textContent = price || '$9.99';
+            document.getElementById('paymentModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePayment() {
+            document.getElementById('paymentModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function selectPayment(method, name) {
+            // Redirect to Sellhub with the product link
+            // You can customize this to show a confirmation or pass payment method
+            const url = paymentProductLink + '?payment=' + encodeURIComponent(method);
+            window.open(url, '_blank');
+            closePayment();
+        }
+
+        // Close on background click
+        document.getElementById('paymentModal').addEventListener('click', function(e) {
+            if (e.target === this) closePayment();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closePayment();
+        });
+
+        // ===== CURSOR GLOW =====
         const glow = document.createElement('div');
         glow.style.cssText = 'position:fixed;width:300px;height:300px;background:radial-gradient(circle,rgba(140,80,255,0.08) 0%,transparent 70%);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);z-index:999;transition:opacity 0.2s;will-change:left,top;';
         document.body.appendChild(glow);
