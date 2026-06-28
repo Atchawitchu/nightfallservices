@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
+        /* ===== RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -23,6 +24,7 @@
             overflow-x: hidden;
         }
 
+        /* ===== ANIMATED BG ===== */
         .bg-glow {
             position: fixed;
             top: -20%;
@@ -50,10 +52,12 @@
             100% { transform: translate(4%, 6%) scale(1.05); }
         }
 
+        /* ===== SCROLLBAR ===== */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #14111c; }
         ::-webkit-scrollbar-thumb { background: #6d3bff; border-radius: 20px; }
 
+        /* ===== UTILITY ===== */
         .container {
             max-width: 1280px;
             margin: 0 auto;
@@ -77,6 +81,7 @@
             max-width: 600px;
         }
 
+        /* ===== NAV ===== */
         nav {
             padding: 1.4rem 0;
             position: sticky;
@@ -141,6 +146,7 @@
             box-shadow: 0 0 20px rgba(88, 101, 242, 0.3);
         }
 
+        /* ===== HERO ===== */
         .hero {
             padding: 4rem 0 5rem;
             position: relative;
@@ -177,7 +183,6 @@
             gap: 1rem;
             flex-wrap: wrap;
         }
-
         .btn-primary {
             background: linear-gradient(135deg, #7b4aff, #a07aff);
             border: none;
@@ -198,7 +203,6 @@
             transform: translateY(-3px);
             box-shadow: 0 20px 40px -8px rgba(100, 40, 255, 0.5);
         }
-
         .btn-secondary {
             background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(8px);
@@ -264,6 +268,7 @@
             font-size: 0.9rem;
         }
 
+        /* ===== PRODUCTS (preview) ===== */
         .products {
             padding: 5rem 0;
         }
@@ -282,7 +287,6 @@
             transition: 0.3s ease;
             display: flex;
             flex-direction: column;
-            cursor: pointer;
         }
         .product-card:hover {
             transform: translateY(-6px);
@@ -324,92 +328,12 @@
             color: #d6c8ff;
             font-weight: 600;
         }
-
-        /* ===== MODAL ===== */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(12px);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-        }
-        .modal-overlay.active {
-            display: flex;
-        }
-        .modal-content {
-            background: #14111c;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 2.5rem;
-            max-width: 700px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 2.5rem;
-            position: relative;
-            box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.9);
-        }
-        .modal-close {
-            position: absolute;
-            top: 1.2rem;
-            right: 1.5rem;
-            font-size: 1.8rem;
-            color: #8d85a3;
-            cursor: pointer;
-            transition: 0.2s;
-            background: none;
-            border: none;
-        }
-        .modal-close:hover {
-            color: #f0edf5;
-            transform: rotate(90deg);
-        }
-        .modal-content .product-icon {
-            font-size: 4rem;
-            color: #a07aff;
-            margin-bottom: 1rem;
-        }
-        .modal-content h2 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        .modal-content .modal-description {
-            color: #b1aac7;
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.7;
-        }
-        .modal-content .modal-pricing {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 1.2rem;
-            padding: 1.2rem 1.5rem;
-            margin-bottom: 1.8rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.2rem 2rem;
-        }
-        .modal-content .modal-pricing span {
-            color: #d6c8ff;
-            font-weight: 600;
-        }
-        .modal-content .modal-pricing .price-item {
-            color: #b1aac7;
-            font-size: 1rem;
-        }
-        .modal-content .btn-primary {
-            padding: 0.8rem 2.5rem;
-            font-size: 1.1rem;
-            text-decoration: none;
-            display: inline-block;
+        .view-all {
+            text-align: center;
+            margin-top: 3rem;
         }
 
+        /* ===== REVIEWS ===== */
         .reviews {
             padding: 4rem 0;
         }
@@ -435,6 +359,7 @@
             margin: 0.6rem 0;
         }
 
+        /* ===== FAQ ===== */
         .faq {
             padding: 4rem 0 5rem;
         }
@@ -464,6 +389,7 @@
             padding-left: 0.2rem;
         }
 
+        /* ===== FOOTER ===== */
         footer {
             padding: 2.5rem 0;
             border-top: 1px solid rgba(255,255,255,0.03);
@@ -476,12 +402,12 @@
             text-decoration: none;
         }
 
+        /* ===== MOBILE ===== */
         @media (max-width: 900px) {
             .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
             .hero h1 { font-size: 2.8rem; }
             .nav-links { gap: 1.2rem; }
             .section-title { font-size: 2.2rem; }
-            .modal-content { padding: 1.8rem; margin: 1rem; }
         }
         @media (max-width: 600px) {
             .container { padding: 0 1.2rem; }
@@ -489,9 +415,9 @@
             .hero-stats { flex-wrap: wrap; gap: 1.2rem; }
             .hero h1 { font-size: 2.2rem; }
             .product-grid { grid-template-columns: 1fr; }
-            .modal-content { padding: 1.5rem; }
         }
 
+        /* ===== ANIMATIONS ===== */
         .fade-up {
             opacity: 0;
             transform: translateY(30px);
@@ -505,6 +431,7 @@
 </head>
 <body>
 
+    <!-- Background orbs -->
     <div class="bg-glow"></div>
     <div class="bg-glow-2"></div>
 
@@ -513,7 +440,7 @@
         <div class="container nav-inner">
             <div class="logo"><i class="fas fa-moon"></i> nightfall</div>
             <ul class="nav-links">
-                <li><a href="#products">Services</a></li>
+                <li><a href="shop.html">Shop</a></li>
                 <li><a href="#reviews">Reviews</a></li>
                 <li><a href="#faq">FAQ</a></li>
                 <li><a href="https://discord.gg/NsKZASjYT4" target="_blank" class="discord-btn"><i class="fab fa-discord"></i> Discord</a></li>
@@ -529,7 +456,7 @@
                 <p>Premium tools, development, graphics & accounts — built for those who demand performance.</p>
                 <div class="hero-actions">
                     <a href="https://discord.gg/NsKZASjYT4" target="_blank" class="btn-primary"><i class="fab fa-discord"></i> Join Discord</a>
-                    <a href="#products" class="btn-secondary">Explore <i class="fas fa-arrow-right"></i></a>
+                    <a href="shop.html" class="btn-secondary">Explore <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="hero-stats">
                     <div class="stat-item"><h3>120+</h3><p>customers</p></div>
@@ -558,41 +485,38 @@
         </div>
     </section>
 
-    <!-- ===== PRODUCTS ===== -->
+    <!-- ===== PRODUCTS PREVIEW ===== -->
     <section class="products container" id="products">
         <div class="fade-up">
-            <h2 class="section-title">Our services</h2>
-            <p class="section-sub">Click any product for full details.</p>
+            <h2 class="section-title">Featured products</h2>
+            <p class="section-sub">Check out our premium offerings.</p>
         </div>
         <div class="product-grid">
 
-            <!-- Product 1 -->
-            <div class="product-card fade-up" onclick="openModal('chair1')">
+            <div class="product-card fade-up">
                 <i class="fas fa-crown"></i>
                 <h3>BO7/WZ NightFall Internal Chair</h3>
-                <p>Premium internal chair for BO7 & Warzone. Full control, smooth visuals.</p>
+                <p>Premium internal chair for BO7 & Warzone.</p>
                 <span class="product-tag">popular</span>
                 <div class="product-pricing">
                     <span>1 day:</span> $12 &nbsp;|&nbsp; <span>1 week:</span> $27 &nbsp;|&nbsp; <span>1 month:</span> $52
                 </div>
             </div>
 
-            <!-- Product 2 -->
-            <div class="product-card fade-up" onclick="openModal('chair2')">
+            <div class="product-card fade-up">
                 <i class="fas fa-crosshairs"></i>
                 <h3>MW19-B07 NightFall Internal Chair</h3>
-                <p>Internal chair for MW19 & B07. Consistent performance, reliable.</p>
+                <p>Internal chair for MW19 & B07.</p>
                 <span class="product-tag">hot</span>
                 <div class="product-pricing">
                     <span>1 day:</span> $8 &nbsp;|&nbsp; <span>1 week:</span> $15 &nbsp;|&nbsp; <span>1 month:</span> $26
                 </div>
             </div>
 
-            <!-- Product 3 -->
-            <div class="product-card fade-up" onclick="openModal('emulator')">
+            <div class="product-card fade-up">
                 <i class="fas fa-gamepad"></i>
                 <h3>NightFall VGC Emulator</h3>
-                <p>Next-gen VGC emulator with smooth performance and premium features.</p>
+                <p>Next-gen VGC emulator.</p>
                 <span class="product-tag">new</span>
                 <div class="product-pricing">
                     <span>1 week:</span> $40 &nbsp;|&nbsp; <span>1 month:</span> $100
@@ -600,17 +524,10 @@
             </div>
 
         </div>
-    </section>
-
-    <!-- ===== MODAL ===== -->
-    <div class="modal-overlay" id="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()">✕</button>
-            <div id="modal-body">
-                <!-- Dynamic content loaded by JS -->
-            </div>
+        <div class="view-all">
+            <a href="shop.html" class="btn-primary">View All Products →</a>
         </div>
-    </div>
+    </section>
 
     <!-- ===== REVIEWS ===== -->
     <section class="reviews container" id="reviews">
@@ -647,75 +564,7 @@
     </footer>
 
     <script>
-        // ===== PRODUCT DATA =====
-        const products = {
-            chair1: {
-                name: "BO7/WZ NightFall Internal Chair",
-                icon: "fa-crown",
-                description: "Premium internal chair for Black Ops 7 & Warzone. Features full aim control, smooth visuals, and reliable in-match performance. Built for consistency and dominance.",
-                pricing: "1 day: $12 | 1 week: $27 | 1 month: $52",
-                buyLink: "https://nightfall.sellhub.cx/product/New-product3",
-                tag: "popular"
-            },
-            chair2: {
-                name: "MW19-B07 NightFall Internal Chair",
-                icon: "fa-crosshairs",
-                description: "Internal chair for Modern Warfare 19 & Black Ops 7. Consistent performance with smooth aim assist and visual enhancements. Built for reliability.",
-                pricing: "1 day: $8 | 1 week: $15 | 1 month: $26",
-                buyLink: "https://nightfall.sellhub.cx/product/New-product11",
-                tag: "hot"
-            },
-            emulator: {
-                name: "NightFall VGC Emulator",
-                icon: "fa-gamepad",
-                description: "Next-gen VGC emulator with smooth performance, premium features, and full compatibility. Built for the competitive player who demands the best.",
-                pricing: "1 week: $40 | 1 month: $100",
-                buyLink: "https://nightfall.sellhub.cx/product/New-product",
-                tag: "new"
-            }
-        };
-
-        // ===== MODAL FUNCTIONS =====
-        function openModal(id) {
-            const product = products[id];
-            if (!product) return;
-
-            const modal = document.getElementById('modal');
-            const body = document.getElementById('modal-body');
-
-            body.innerHTML = `
-                <i class="fas ${product.icon} product-icon"></i>
-                <h2>${product.name}</h2>
-                <span class="product-tag" style="margin-bottom: 1rem;">${product.tag}</span>
-                <p class="modal-description">${product.description}</p>
-                <div class="modal-pricing">
-                    <div class="price-item"><span>Pricing:</span> ${product.pricing}</div>
-                </div>
-                <a href="${product.buyLink}" target="_blank" class="btn-primary">
-                    Buy Now →
-                </a>
-            `;
-
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            document.getElementById('modal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Close modal on background click
-        document.getElementById('modal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
-
-        // Close modal on Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeModal();
-        });
-
-        // ===== FADE-UP ANIMATIONS =====
+        // Fade-up animations
         const faders = document.querySelectorAll('.fade-up');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -724,10 +573,9 @@
                 }
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
         faders.forEach(el => observer.observe(el));
 
-        // ===== CURSOR GLOW =====
+        // Cursor glow
         const glow = document.createElement('div');
         glow.style.cssText = 'position:fixed;width:280px;height:280px;background:radial-gradient(circle,rgba(140,80,255,0.12) 0%,transparent 70%);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);z-index:999;transition:opacity 0.15s;will-change:left,top;';
         document.body.appendChild(glow);
