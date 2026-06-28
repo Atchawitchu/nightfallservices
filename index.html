@@ -216,6 +216,7 @@
             align-items: center;
             gap: 8px;
             cursor: pointer;
+            text-decoration: none;
         }
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.08);
@@ -273,7 +274,7 @@
         }
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             margin-top: 2.8rem;
         }
@@ -284,6 +285,8 @@
             border-radius: 2rem;
             padding: 2rem 1.8rem;
             transition: 0.3s ease;
+            display: flex;
+            flex-direction: column;
         }
         .product-card:hover {
             transform: translateY(-6px);
@@ -306,13 +309,31 @@
         }
         .product-tag {
             display: inline-block;
-            margin-top: 1rem;
+            margin: 0.8rem 0 1rem;
             background: rgba(160, 122, 255, 0.12);
             padding: 0.2rem 1rem;
             border-radius: 30px;
             font-size: 0.8rem;
             color: #c6b1ff;
             font-weight: 500;
+            align-self: flex-start;
+        }
+        .product-pricing {
+            margin: 0.5rem 0 1rem;
+            color: #b1aac7;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .product-pricing span {
+            color: #d6c8ff;
+            font-weight: 600;
+        }
+        .product-card .btn-primary {
+            padding: 0.6rem 1.5rem;
+            font-size: 0.9rem;
+            align-self: flex-start;
+            margin-top: auto;
+            text-decoration: none;
         }
 
         /* ===== REVIEWS ===== */
@@ -396,6 +417,7 @@
             .nav-links { display: none; }
             .hero-stats { flex-wrap: wrap; gap: 1.2rem; }
             .hero h1 { font-size: 2.2rem; }
+            .product-grid { grid-template-columns: 1fr; }
         }
 
         /* ===== ANIMATIONS ===== */
@@ -424,6 +446,7 @@
                 <li><a href="#products">Services</a></li>
                 <li><a href="#reviews">Reviews</a></li>
                 <li><a href="#faq">FAQ</a></li>
+                <li><a href="https://shop.nightfallservices.xyz" target="_blank">Shop</a></li>
                 <li><a href="https://discord.gg/NsKZASjYT4" target="_blank" class="discord-btn"><i class="fab fa-discord"></i> Discord</a></li>
             </ul>
         </div>
@@ -436,8 +459,8 @@
                 <h1>Elevating <span>your experience</span></h1>
                 <p>Premium tools, development, graphics & accounts — built for those who demand performance.</p>
                 <div class="hero-actions">
-                    <a href="https://discord.gg/NsKZASjYT4" target="_blank" class="btn-primary"><i class="fab fa-discord"></i> Join Discord</a>
-                    <button class="btn-secondary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Explore <i class="fas fa-arrow-right"></i></button>
+                    <a href="https://shop.nightfallservices.xyz" target="_blank" class="btn-primary"><i class="fas fa-store"></i> Visit Store</a>
+                    <a href="#products" class="btn-secondary">Explore <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="hero-stats">
                     <div class="stat-item"><h3>120+</h3><p>customers</p></div>
@@ -473,10 +496,49 @@
             <p class="section-sub">Built for quality, backed by nightfall.</p>
         </div>
         <div class="product-grid">
-            <div class="product-card fade-up"><i class="fas fa-gamepad"></i><h3>Game dev</h3><p>Custom scripts, mods, and optimizations.</p><span class="product-tag">popular</span></div>
-            <div class="product-card fade-up"><i class="fas fa-palette"></i><h3>Graphics</h3><p>Logos, overlays, thumbnails, UI packs.</p><span class="product-tag">design</span></div>
-            <div class="product-card fade-up"><i class="fas fa-ticket-alt"></i><h3>Discord services</h3><p>Bots, servers, moderation, nitro.</p><span class="product-tag">community</span></div>
-            <div class="product-card fade-up"><i class="fas fa-user-cog"></i><h3>Accounts</h3><p>Gaming & platform accounts, safe & verified.</p><span class="product-tag">premium</span></div>
+
+            <!-- Product 1: BO7/WZ NightFall Internal Chair -->
+            <div class="product-card fade-up">
+                <i class="fas fa-crown"></i>
+                <h3>BO7/WZ NightFall Internal Chair</h3>
+                <p>Premium internal chair for BO7 & Warzone. Full control, smooth visuals.</p>
+                <span class="product-tag">popular</span>
+                <div class="product-pricing">
+                    <span>1 day:</span> $12 &nbsp;|&nbsp; <span>1 week:</span> $27 &nbsp;|&nbsp; <span>1 month:</span> $52
+                </div>
+                <a href="https://nightfall.sellhub.cx/product/New-product3" target="_blank" class="btn-primary">
+                    Buy Now →
+                </a>
+            </div>
+
+            <!-- Product 2: MW19-B07 NightFall Internal Chair -->
+            <div class="product-card fade-up">
+                <i class="fas fa-crosshairs"></i>
+                <h3>MW19-B07 NightFall Internal Chair</h3>
+                <p>Internal chair for MW19 & B07. Consistent performance, reliable.</p>
+                <span class="product-tag">hot</span>
+                <div class="product-pricing">
+                    <span>1 day:</span> $8 &nbsp;|&nbsp; <span>1 week:</span> $15 &nbsp;|&nbsp; <span>1 month:</span> $26
+                </div>
+                <a href="https://nightfall.sellhub.cx/product/New-product11" target="_blank" class="btn-primary">
+                    Buy Now →
+                </a>
+            </div>
+
+            <!-- Product 3: NightFall VGC Emulator -->
+            <div class="product-card fade-up">
+                <i class="fas fa-gamepad"></i>
+                <h3>NightFall VGC Emulator</h3>
+                <p>Next-gen VGC emulator with smooth performance and premium features.</p>
+                <span class="product-tag">new</span>
+                <div class="product-pricing">
+                    <span>1 week:</span> $40 &nbsp;|&nbsp; <span>1 month:</span> $100
+                </div>
+                <a href="https://nightfall.sellhub.cx/product/New-product" target="_blank" class="btn-primary">
+                    Buy Now →
+                </a>
+            </div>
+
         </div>
     </section>
 
@@ -500,17 +562,17 @@
             <p class="section-sub">Everything you need to know.</p>
         </div>
         <div class="faq-list">
-            <div class="faq-item fade-up"><summary>How do I order?</summary><p>Join our Discord and open a ticket — we'll handle the rest.</p></div>
-            <div class="faq-item fade-up"><summary>What payment methods do you accept?</summary><p>PayPal, crypto, and Discord gift cards.</p></div>
-            <div class="faq-item fade-up"><summary>How fast is delivery?</summary><p>Most services are delivered within 24h, often same-day.</p></div>
-            <div class="faq-item fade-up"><summary>Do you offer refunds?</summary><p>Yes, we have a clear refund policy. Ask in Discord for details.</p></div>
+            <div class="faq-item fade-up"><summary>How do I order?</summary><p>Click "Buy Now" on any product — it'll take you to our secure store. Or join our Discord and open a ticket!</p></div>
+            <div class="faq-item fade-up"><summary>What payment methods do you accept?</summary><p>PayPal, crypto, and Discord gift cards — all processed securely through our store.</p></div>
+            <div class="faq-item fade-up"><summary>How fast is delivery?</summary><p>Most services are delivered within 24h, often same-day after purchase.</p></div>
+            <div class="faq-item fade-up"><summary>Do you offer refunds?</summary><p>Yes, we have a clear refund policy. Check our store or ask in Discord for details.</p></div>
         </div>
     </section>
 
     <!-- ===== FOOTER ===== -->
     <footer>
         <div class="container">
-            <p>© 2026 <a href="https://discord.gg/NsKZASjYT4" target="_blank">Nightfall Services</a> — built with <i class="fas fa-heart" style="color:#a07aff;"></i> for the community.</p>
+            <p>© 2026 <a href="https://shop.nightfallservices.xyz" target="_blank">Nightfall Services</a> — built with <i class="fas fa-heart" style="color:#a07aff;"></i> for the community.</p>
         </div>
     </footer>
 
