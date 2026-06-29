@@ -340,6 +340,125 @@
         .faq-item summary:hover { color: #c6b1ff; }
         .faq-item p { margin-top: 0.8rem; color: #b1aac7; padding-left: 0.2rem; }
 
+        /* ===== EXPLORE MODAL ===== */
+        .explore-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.92);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .explore-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .explore-modal {
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 0.5rem;
+            transform: scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .explore-overlay.active .explore-modal {
+            transform: scale(1);
+        }
+        .explore-modal::-webkit-scrollbar { width: 4px; }
+        .explore-modal::-webkit-scrollbar-track { background: transparent; }
+        .explore-modal::-webkit-scrollbar-thumb { background: #6d3bff; border-radius: 20px; }
+
+        .explore-close {
+            float: right;
+            font-size: 2.2rem;
+            color: #8d85a3;
+            cursor: pointer;
+            transition: 0.3s ease;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            line-height: 1;
+        }
+        .explore-close:hover {
+            color: #f0edf5;
+            transform: rotate(90deg);
+        }
+
+        .explore-modal h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 0 0 0.5rem 0;
+            background: linear-gradient(135deg, #c6b1ff, #a07aff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .explore-modal .explore-sub {
+            text-align: center;
+            color: #8d85a3;
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .explore-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        .explore-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 1.8rem;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.35s cubic-bezier(0.2,0.9,0.3,1);
+            text-decoration: none;
+            color: #f0edf5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .explore-item:hover {
+            transform: translateY(-8px) scale(1.03);
+            border-color: rgba(160,122,255,0.4);
+            background: rgba(255,255,255,0.06);
+            box-shadow: 0 25px 50px -12px rgba(100,40,255,0.2);
+        }
+        .explore-item i {
+            font-size: 3rem;
+            color: #a07aff;
+            margin-bottom: 0.2rem;
+        }
+        .explore-item .explore-label {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .explore-item .explore-desc {
+            color: #8d85a3;
+            font-size: 0.8rem;
+        }
+        .explore-item .explore-badge {
+            background: rgba(160,122,255,0.12);
+            padding: 0.15rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            color: #c6b1ff;
+            margin-top: 0.2rem;
+        }
+
         /* ===== PAYMENT MODAL ===== */
         .payment-overlay {
             display: none;
@@ -517,6 +636,8 @@
             .nav-links { gap: 1rem; }
             .section-title { font-size: 2.2rem; }
             #discord-widget { bottom: 1rem; right: 1rem; padding: 0.6rem 1rem; }
+            .explore-modal h2 { font-size: 2.2rem; }
+            .explore-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
         }
         @media (max-width: 600px) {
             .container { padding: 0 1.2rem; }
@@ -531,6 +652,11 @@
             footer .footer-links { gap: 1rem; }
             footer .footer-links a { font-size: 0.75rem; }
             .dropdown-content { left: -60px; min-width: 140px; }
+            .explore-modal h2 { font-size: 1.8rem; }
+            .explore-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+            .explore-item { padding: 1.2rem; }
+            .explore-item i { font-size: 2rem; }
+            .explore-overlay { padding: 1rem; }
         }
 
         .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.7s cubic-bezier(0.2,0.9,0.3,1), transform 0.7s cubic-bezier(0.2,0.9,0.3,1); }
@@ -591,7 +717,7 @@
                 <p>Premium tools, development, graphics & accounts — built for those who demand performance.</p>
                 <div class="hero-actions">
                     <a href="https://discord.gg/NsKZASjYT4" target="_blank" class="btn-primary"><i class="fab fa-discord"></i> Join Discord</a>
-                    <a href="shop.html" class="btn-secondary">Explore <i class="fas fa-arrow-right"></i></a>
+                    <a href="#" class="btn-secondary" onclick="openExplore()">Explore <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="hero-stats">
                     <div class="stat-item"><h3>120+</h3><p>customers</p></div>
@@ -637,7 +763,7 @@
             </div>
         </div>
         <div class="view-all">
-            <a href="shop.html" class="btn-primary">View All Products →</a>
+            <a href="#" class="btn-primary" onclick="openExplore()">View All Products →</a>
         </div>
     </section>
 
@@ -679,6 +805,66 @@
             <p>© 2026 <a href="index.html">NightFall Services</a> — built with <i class="fas fa-heart" style="color:#a07aff;"></i> for the community.</p>
         </div>
     </footer>
+
+    <!-- ===== EXPLORE MODAL ===== -->
+    <div class="explore-overlay" id="exploreModal">
+        <div class="explore-modal">
+            <button class="explore-close" onclick="closeExplore()">✕</button>
+            <h2>Which product are you looking for today?</h2>
+            <p class="explore-sub">Select a category to browse our premium cheats and tools.</p>
+
+            <div class="explore-grid">
+                <a href="cod.html" class="explore-item">
+                    <i class="fas fa-crosshairs"></i>
+                    <span class="explore-label">Call of Duty</span>
+                    <span class="explore-desc">BO6, BO7, Warzone, MW19, MW3</span>
+                    <span class="explore-badge">16 Products</span>
+                </a>
+                <a href="spoofers.html" class="explore-item">
+                    <i class="fas fa-user-secret"></i>
+                    <span class="explore-label">Spoofers</span>
+                    <span class="explore-desc">Permanent &amp; Temporary</span>
+                    <span class="explore-badge">2 Products</span>
+                </a>
+                <a href="fortnite.html" class="explore-item">
+                    <i class="fab fa-fort-awesome"></i>
+                    <span class="explore-label">Fortnite</span>
+                    <span class="explore-desc">External cheat with aimbot &amp; ESP</span>
+                    <span class="explore-badge">1 Product</span>
+                </a>
+                <a href="valorant.html" class="explore-item">
+                    <i class="fas fa-crosshairs"></i>
+                    <span class="explore-label">Valorant</span>
+                    <span class="explore-desc">Internal, Colorbot, VGC Emulator</span>
+                    <span class="explore-badge">3 Products</span>
+                </a>
+                <a href="rust.html" class="explore-item">
+                    <i class="fas fa-cog"></i>
+                    <span class="explore-label">Rust</span>
+                    <span class="explore-desc">External with aimbot &amp; ESP</span>
+                    <span class="explore-badge">1 Product</span>
+                </a>
+                <a href="apex.html" class="explore-item">
+                    <i class="fas fa-bolt"></i>
+                    <span class="explore-label">Apex Legends</span>
+                    <span class="explore-desc">External with kernel-level aimbot</span>
+                    <span class="explore-badge">1 Product</span>
+                </a>
+                <a href="destiny2.html" class="explore-item">
+                    <i class="fas fa-star"></i>
+                    <span class="explore-label">Destiny 2</span>
+                    <span class="explore-desc">Aimbot &amp; ESP for PvE/PvP</span>
+                    <span class="explore-badge">2 Products</span>
+                </a>
+                <a href="shop.html" class="explore-item">
+                    <i class="fas fa-th-large"></i>
+                    <span class="explore-label">All Products</span>
+                    <span class="explore-desc">View our complete catalog</span>
+                    <span class="explore-badge">26 Products</span>
+                </a>
+            </div>
+        </div>
+    </div>
 
     <!-- ===== PAYMENT MODAL ===== -->
     <div class="payment-overlay" id="paymentModal">
@@ -808,6 +994,24 @@
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
         faders.forEach(el => observer.observe(el));
+
+        // ===== EXPLORE MODAL =====
+        function openExplore() {
+            document.getElementById('exploreModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeExplore() {
+            document.getElementById('exploreModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.getElementById('exploreModal').addEventListener('click', function(e) {
+            if (e.target === this) closeExplore();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeExplore();
+        });
 
         // ===== PARTICLES =====
         const canvas = document.getElementById('particles-canvas');
