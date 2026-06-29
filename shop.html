@@ -1394,26 +1394,31 @@
         };
 
         // ===== MODAL =====
+        let currentProductId = null;
+
         function openModal(id) {
             const p = products[id];
             if (!p) return;
+            currentProductId = id;
             const modal = document.getElementById('modal');
             const body = document.getElementById('modal-body');
 
-            // Get duration keys and build buttons
             const durationKeys = Object.keys(p.durations);
-            let durationHTML = '<div class="duration-selector">';
-            durationKeys.forEach((key, index) => {
-                const price = p.durations[key];
-                const activeClass = index === 0 ? 'active' : '';
-                durationHTML += `
-                    <button class="duration-btn ${activeClass}" data-duration="${key}" data-price="${price}" onclick="selectDuration(this, '${id}')">
-                        ${key}
-                        <span class="price">$${price.toFixed(2)}</span>
-                    </button>
-                `;
-            });
-            durationHTML += '</div>';
+            let durationHTML = '';
+            if (durationKeys.length > 1) {
+                durationHTML = '<div class="duration-selector">';
+                durationKeys.forEach((key, index) => {
+                    const price = p.durations[key];
+                    const activeClass = index === 0 ? 'active' : '';
+                    durationHTML += `
+                        <button class="duration-btn ${activeClass}" data-duration="${key}" data-price="${price}" onclick="selectDuration(this, '${id}')">
+                            ${key}
+                            <span class="price">$${price.toFixed(2)}</span>
+                        </button>
+                    `;
+                });
+                durationHTML += '</div>';
+            }
 
             let featuresHTML = '';
             if (p.features) {
@@ -1424,7 +1429,6 @@
                 });
             }
 
-            // Set initial selected duration
             const firstKey = durationKeys[0];
             const firstPrice = p.durations[firstKey];
 
@@ -1438,13 +1442,12 @@
                 </div>
                 ${durationHTML}
                 ${featuresHTML}
-                <a href="#" class="btn-primary" style="margin-top: 0.5rem;" onclick="buyProduct('${id}', '${p.buyLink}')">
+                <a href="${p.buyLink}" target="_blank" class="btn-primary" style="margin-top: 0.5rem; display: inline-block;">
                     Buy Now →
                 </a>
             `;
 
-            // Store product data for later use
-            modal.dataset.productId = id;
+            // Store selected duration in modal
             modal.dataset.selectedDuration = firstKey;
             modal.dataset.selectedPrice = firstPrice;
 
@@ -1464,23 +1467,9 @@
                 display.innerHTML = `<span>Selected:</span> ${duration} — $${price.toFixed(2)}`;
             }
 
-            // Store in modal
             const modal = document.getElementById('modal');
             modal.dataset.selectedDuration = duration;
             modal.dataset.selectedPrice = price;
-        }
-
-        function buyProduct(productId, baseLink) {
-            const modal = document.getElementById('modal');
-            const duration = modal.dataset.selectedDuration || '1 Day';
-            const price = modal.dataset.selectedPrice || '0';
-
-            const p = products[productId];
-            if (!p) return;
-
-            // Build the payment link with duration and price
-            const link = p.buyLink + '?duration=' + encodeURIComponent(duration) + '&price=' + encodeURIComponent(price);
-            openPayment(link, `$${parseFloat(price).toFixed(2)}`);
         }
 
         function closeModal() {
@@ -1511,8 +1500,8 @@
         }
 
         function selectPayment(method, name) {
-            const url = paymentProductLink + '&payment=' + encodeURIComponent(method);
-            window.open(url, '_blank');
+            // Just open the product link directly (Sellhub handles payment selection internally)
+            window.open(paymentProductLink, '_blank');
             closePayment();
         }
 
