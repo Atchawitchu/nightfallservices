@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Nightfall · Reviews</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0a0f;
+            color: #f0edf5;
+            line-height: 1.6;
+            overflow-x: hidden;
+            opacity: 0;
+            transition: opacity 0.6s ease-in;
+        }
+        body.loaded { opacity: 1; }
+
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg-glow {
+            position: fixed;
+            top: -20%;
+            left: -10%;
+            width: 70%;
+            height: 80%;
+            background: radial-gradient(ellipse at 30% 20%, rgba(100,40,255,0.25) 0%, transparent 60%);
+            z-index: 0;
+            filter: blur(60px);
+            animation: floatBg 18s ease-in-out infinite alternate;
+        }
+        .bg-glow-2 {
+            position: fixed;
+            bottom: -10%;
+            right: -10%;
+            width: 60%;
+            height: 70%;
+            background: radial-gradient(ellipse at 70% 80%, rgba(180,70,255,0.20) 0%, transparent 55%);
+            z-index: 0;
+            filter: blur(70px);
+            animation: floatBg 22s ease-in-out infinite alternate-reverse;
+        }
+        @keyframes floatBg {
+            0% { transform: translate(0,0) scale(1); }
+            100% { transform: translate(4%,6%) scale(1.05); }
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #14111c; }
+        ::-webkit-scrollbar-thumb { background: #6d3bff; border-radius: 20px; }
+
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+        .section-title { font-size: 2.8rem; font-weight: 700; letter-spacing: -0.02em; background: linear-gradient(135deg, #c6b1ff, #a07aff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; }
+
+        nav {
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(11,10,15,0.5);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            transition: background 0.3s ease;
+        }
+        nav.scrolled { background: rgba(11,10,15,0.8); }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+        .logo {
+            font-size: 1.7rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #ddd4ff, #b694ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .logo i { margin-right: 6px; color: #a07aff; -webkit-text-fill-color: #a07aff; }
+        .nav-links { display: flex; gap: 1.8rem; align-items: center; list-style: none; flex-wrap: wrap; }
+        .nav-links a {
+            color: #cbc4dc;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: 0.3s ease;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #7b4aff, #a07aff);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover { color: #d6c8ff; }
+        .nav-links a:hover::after { width: 100%; }
+        .discord-btn {
+            background: #5865F2;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            color: #fff !important;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.25s;
+            font-size: 0.85rem;
+        }
+        .discord-btn::after { display: none; }
+        .discord-btn:hover {
+            background: #6d7af5;
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(88,101,242,0.3);
+        }
+
+        .page-header { padding: 4rem 0 2rem; }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1rem;
+            color: #a07aff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .back-link:hover { color: #c6b1ff; }
+
+        /* ===== REVIEWS GRID ===== */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0 4rem;
+        }
+        .review-card {
+            background: rgba(255,255,255,0.02);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 2rem;
+            padding: 2rem 1.8rem;
+            transition: 0.3s ease;
+        }
+        .review-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(160,122,255,0.3);
+            box-shadow: 0 20px 40px -12px rgba(100,40,255,0.1);
+        }
+        .review-card .stars {
+            color: #f5b342;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 0.8rem;
+        }
+        .review-card .review-text {
+            color: #cbc4dc;
+            font-style: italic;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        .review-card .review-author {
+            color: #a07aff;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .review-card .review-role {
+            color: #8d85a3;
+            font-size: 0.85rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7b4aff, #a07aff);
+            border: none;
+            padding: 0.7rem 1.8rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #fff;
+            transition: 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px -8px rgba(100,40,255,0.3);
+            text-decoration: none;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 20px 40px -8px rgba(100,40,255,0.5);
+        }
+
+        footer { padding: 2rem 0; text-align: center; color: #67607a; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.03); }
+        footer a { color: #a07aff; text-decoration: none; transition: 0.2s; }
+        footer a:hover { color: #c6b1ff; }
+
+        @media (max-width: 900px) {
+            .section-title { font-size: 2.2rem; }
+            .nav-links { gap: 1rem; }
+        }
+        @media (max-width: 600px) {
+            .container { padding: 0 1.2rem; }
+            .nav-links { display: none; }
+            .reviews-grid { grid-template-columns: 1fr; }
+            .page-header { padding: 2rem 0 1rem; }
+        }
+        .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.7s cubic-bezier(0.2,0.9,0.3,1), transform 0.7s cubic-bezier(0.2,0.9,0.3,1); }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <canvas id="particles-canvas"></canvas>
+    <div class="bg-glow"></div>
+    <div class="bg-glow-2"></div>
+
+    <nav>
+        <div class="container nav-inner">
+            <div class="logo"><i class="fas fa-moon"></i> nightfall</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="reviews.html">Reviews</a></li>
+                <li><a href="tos.html">TOS</a></li>
+                <li><a href="refund.html">Refund</a></li>
+                <li><a href="https://discord.gg/NsKZASjYT4" target="_blank" class="discord-btn"><i class="fab fa-discord"></i> Discord</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="page-header container">
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        <h2 class="section-title">What our clients say</h2>
+        <p style="color:#a29bb5; font-size:1.1rem;">Real reviews from real customers.</p>
+    </section>
+
+    <div class="container reviews-grid">
+        <div class="review-card fade-up">
+            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p class="review-text">"Nightfall delivered my custom script in under 2 hours. The quality was insane — worked perfectly on the first try. Definitely coming back for more."</p>
+            <div class="review-author">DevLynx</div>
+            <div class="review-role">Game Developer</div>
+        </div>
+
+        <div class="review-card fade-up">
+            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p class="review-text">"The graphics pack was exactly what I needed. Clean, modern, and the customer support was top-notch. Highly recommend."</p>
+            <div class="review-author">pixelVibe</div>
+            <div class="review-role">Content Creator</div>
+        </div>
+
+        <div class="review-card fade-up">
+            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p class="review-text">"Fast, professional, and the Discord community is awesome. Best service I've used, hands down. The BO7 chair is unreal."</p>
+            <div class="review-author">Synthx</div>
+            <div class="review-role">Pro Player</div>
+        </div>
+
+        <div class="review-card fade-up">
+            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p class="review-text">"Silent aim and ESP are flawless. My KD has never been higher. 10/10 service, quick delivery, great communication."</p>
+            <div class="review-author">xRage</div>
+            <div class="review-role">Competitive Player</div>
+        </div>
+
+        <div class="review-card fade-up">
+            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p class="review-text">"The VGC emulator is a game-changer. No more error codes, smooth gameplay, and the setup was lightning fast. Worth every penny."</p>
+            <div class="review-author">ValorantKing</div>
+            <div class="review-role">Competitive Player</div>
+        </div>
+
+        <div class="review-card fade-up">
+            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p class="review-text">"I've tried other services before, but Nightfall is on another level. The quality and reliability are unmatched. 100% recommend."</p>
+            <div class="review-author">ApexPredator</div>
+            <div class="review-role">Content Creator</div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 <a href="index.html">Nightfall Services</a> — built with <i class="fas fa-heart" style="color:#a07aff;"></i></p>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('load', function() { document.body.classList.add('loaded'); });
+
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+
+        const faders = document.querySelectorAll('.fade-up');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        faders.forEach(el => observer.observe(el));
+
+        // ===== PARTICLES =====
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouseX = 0, mouseY = 0;
+        let animationId;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+                this.opacity = Math.random() * 0.5 + 0.2;
+                this.pulse = Math.random() * Math.PI * 2;
+                this.pulseSpeed = Math.random() * 0.02 + 0.01;
+            }
+            update() {
+                this.pulse += this.pulseSpeed;
+                const currentOpacity = this.opacity + Math.sin(this.pulse) * 0.1;
+                const dx = mouseX - this.x;
+                const dy = mouseY - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 200) {
+                    const force = (200 - dist) / 200 * 0.3;
+                    this.x -= (dx / dist) * force;
+                    this.y -= (dy / dist) * force;
+                }
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(160, 122, 255, ${Math.max(0.1, currentOpacity)})`;
+                ctx.fill();
+            }
+        }
+
+        const particleCount = Math.min(120, Math.floor(window.innerWidth * 0.1));
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+        document.addEventListener('mouseleave', () => {
+            mouseX = -1000;
+            mouseY = -1000;
+        });
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => p.update());
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120) {
+                        const opacity = (1 - dist / 120) * 0.15;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(160, 122, 255, ${opacity})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+            animationId = requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        const glow = document.createElement('div');
+        glow.style.cssText = 'position:fixed;width:300px;height:300px;background:radial-gradient(circle,rgba(140,80,255,0.08) 0%,transparent 70%);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);z-index:999;transition:opacity 0.2s;will-change:left,top;';
+        document.body.appendChild(glow);
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+        document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; });
+        document.addEventListener('mouseenter', () => { glow.style.opacity = '1'; });
+    </script>
+</body>
+</html>
