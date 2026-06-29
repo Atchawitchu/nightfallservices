@@ -64,21 +64,6 @@
 
         .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
         .section-title { font-size: 2.8rem; font-weight: 700; letter-spacing: -0.02em; background: linear-gradient(135deg, #c6b1ff, #a07aff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; }
-        .category-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin: 3rem 0 1.5rem;
-            color: #c6b1ff;
-            border-bottom: 1px solid rgba(160,122,255,0.15);
-            padding-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-        .category-title i {
-            color: #a07aff;
-            font-size: 1.6rem;
-        }
 
         nav {
             padding: 1rem 0;
@@ -92,7 +77,7 @@
             transition: background 0.3s ease;
         }
         nav.scrolled { background: rgba(11,10,15,0.8); }
-        .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
         .logo {
             font-size: 1.7rem;
             font-weight: 800;
@@ -124,6 +109,34 @@
         }
         .nav-links a:hover { color: #d6c8ff; }
         .nav-links a:hover::after { width: 100%; }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: #14111c;
+            min-width: 160px;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 1rem;
+            padding: 0.5rem 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            z-index: 100;
+            top: 100%;
+            left: 0;
+        }
+        .dropdown-content a {
+            color: #cbc4dc;
+            padding: 0.5rem 1.2rem;
+            display: block;
+            font-size: 0.85rem;
+        }
+        .dropdown-content a:hover { background: rgba(160,122,255,0.08); color: #f0edf5; }
+        .dropdown-content a::after { display: none; }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown > a::after { display: none; }
+
         .discord-btn {
             background: #5865F2;
             padding: 0.4rem 1rem;
@@ -506,7 +519,6 @@
         @media (max-width: 900px) {
             .section-title { font-size: 2.2rem; }
             .nav-links { gap: 1rem; }
-            .category-title { font-size: 1.6rem; }
         }
         @media (max-width: 600px) {
             .container { padding: 0 1.2rem; }
@@ -520,7 +532,7 @@
             #discord-widget .discord-info p { font-size: 0.8rem; }
             footer .footer-links { gap: 1rem; }
             footer .footer-links a { font-size: 0.75rem; }
-            .category-title { font-size: 1.3rem; }
+            .dropdown-content { left: -60px; min-width: 140px; }
         }
 
         .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.7s cubic-bezier(0.2,0.9,0.3,1), transform 0.7s cubic-bezier(0.2,0.9,0.3,1); }
@@ -548,7 +560,19 @@
             <div class="logo"><i class="fas fa-moon"></i> NightFall</div>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="shop.html">Shop</a></li>
+                <li class="dropdown">
+                    <a href="#">Shop <i class="fas fa-chevron-down" style="font-size:0.6rem; margin-left:4px;"></i></a>
+                    <div class="dropdown-content">
+                        <a href="cod.html">⚔️ Call of Duty</a>
+                        <a href="spoofers.html">🛡️ Spoofers</a>
+                        <a href="fortnite.html">🎯 Fortnite</a>
+                        <a href="valorant.html">🎯 Valorant</a>
+                        <a href="rust.html">⚙️ Rust</a>
+                        <a href="apex.html">🤖 Apex Legends</a>
+                        <a href="destiny2.html">⭐ Destiny 2</a>
+                        <a href="shop.html">📦 All Products</a>
+                    </div>
+                </li>
                 <li><a href="reviews.html">Reviews</a></li>
                 <li><a href="tos.html">TOS</a></li>
                 <li><a href="refund.html">Refund</a></li>
@@ -559,21 +583,18 @@
 
     <section class="shop-header container" id="shop">
         <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
-        <h2 class="section-title">Our Products</h2>
-        <p class="section-sub" style="color:#a29bb5; font-size:1.1rem;">Click any product for full details.</p>
+        <h2 class="section-title">All Products</h2>
+        <p style="color:#a29bb5; font-size:1.1rem;">Browse our full catalog of cheats and tools.</p>
     </section>
 
     <div class="container">
-
         <!-- ===== COD PRODUCTS ===== -->
-        <h3 class="category-title"><i class="fas fa-crosshairs"></i> Call of Duty</h3>
         <div class="product-grid">
-
             <!-- Zerox -->
             <div class="product-card fade-up delay-1" onclick="openModal('zerox')">
                 <i class="fas fa-crown"></i>
                 <h3>BO7/WZ NightFall Internal Chair</h3>
-                <p class="description">BO7/WZ internal chair with built-in spoofer. Silent aim, spin bot, jitter, and full ESP.</p>
+                <p class="description">BO7/WZ internal chair with built-in spoofer. Silent aim, spin bot, jitter, full ESP.</p>
                 <span class="product-tag">Internal</span>
                 <div class="product-pricing"><span>1 Day:</span> $12 &nbsp;|&nbsp; <span>1 Week:</span> $27 &nbsp;|&nbsp; <span>1 Month:</span> $52</div>
                 <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
@@ -583,7 +604,7 @@
             <div class="product-card fade-up delay-2" onclick="openModal('noch')">
                 <i class="fas fa-crown"></i>
                 <h3>MW19-B07 NightFall Internal Chair</h3>
-                <p class="description">MW19-B07 internal chair with silent aim, spin bot, jitter, and full ESP.</p>
+                <p class="description">MW19-B07 internal chair with silent aim, spin bot, jitter, full ESP.</p>
                 <span class="product-tag">Internal</span>
                 <div class="product-pricing"><span>1 Day:</span> $12 &nbsp;|&nbsp; <span>1 Week:</span> $27 &nbsp;|&nbsp; <span>1 Month:</span> $52</div>
                 <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
@@ -603,7 +624,7 @@
             <div class="product-card fade-up delay-1" onclick="openModal('mist')">
                 <i class="fas fa-cloud"></i>
                 <h3>BO7/WZ NightFall External Chair (Mist)</h3>
-                <p class="description">BO7/WZ external cheat with web menu, shareable radar, and built-in spoofer. StreamProof.</p>
+                <p class="description">BO7/WZ external cheat with web menu, shareable radar, built-in spoofer. StreamProof.</p>
                 <span class="product-tag">External</span>
                 <div class="product-pricing"><span>1 Day:</span> $12 &nbsp;|&nbsp; <span>1 Week:</span> $27 &nbsp;|&nbsp; <span>1 Month:</span> $52</div>
                 <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
@@ -729,14 +750,8 @@
                 <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
             </div>
 
-        </div>
-
-        <!-- ===== SPOOFERS ===== -->
-        <h3 class="category-title"><i class="fas fa-user-secret"></i> Spoofers</h3>
-        <div class="product-grid">
-
-            <!-- Permanent Spoofer -->
-            <div class="product-card fade-up delay-1" onclick="openModal('permanent')">
+            <!-- ===== SPOOFERS ===== -->
+            <div class="product-card fade-up delay-2" onclick="openModal('permanent')">
                 <i class="fas fa-infinity"></i>
                 <h3>NightFall Permanent Spoofer</h3>
                 <p class="description">Permanent spoofer with Vanguard support, TPM spoofing, MAC spoofing, SMBIOS fixer, EDID spoofing.</p>
@@ -745,8 +760,7 @@
                 <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
             </div>
 
-            <!-- Temporary Spoofer -->
-            <div class="product-card fade-up delay-2" onclick="openModal('temporary')">
+            <div class="product-card fade-up delay-3" onclick="openModal('temporary')">
                 <i class="fas fa-clock"></i>
                 <h3>NightFall Temporary Spoofer</h3>
                 <p class="description">One-click temporary spoofer with traces cleaner. Supports locked motherboards, all storage types.</p>
@@ -755,13 +769,7 @@
                 <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
             </div>
 
-        </div>
-
-        <!-- ===== FORTNITE ===== -->
-        <h3 class="category-title"><i class="fas fa-battle-net"></i> Fortnite</h3>
-        <div class="product-grid">
-
-            <!-- Fortnite -->
+            <!-- ===== FORTNITE ===== -->
             <div class="product-card fade-up delay-1" onclick="openModal('fortnite')">
                 <i class="fab fa-fort-awesome"></i>
                 <h3>NightFall Fortnite External</h3>
@@ -771,14 +779,8 @@
                 <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
             </div>
 
-        </div>
-
-        <!-- ===== VALORANT ===== -->
-        <h3 class="category-title"><i class="fas fa-crosshairs"></i> Valorant</h3>
-        <div class="product-grid">
-
-            <!-- Private Colorbot -->
-            <div class="product-card fade-up delay-1" onclick="openModal('colorbot')">
+            <!-- ===== VALORANT ===== -->
+            <div class="product-card fade-up delay-2" onclick="openModal('colorbot')">
                 <i class="fas fa-eye-dropper"></i>
                 <h3>NightFall Private Colorbot</h3>
                 <p class="description">Valorant private colorbot — external pixel detection, dual FOV system, triggerbot, recoil control.</p>
@@ -787,8 +789,7 @@
                 <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
             </div>
 
-            <!-- Valorant Internal -->
-            <div class="product-card fade-up delay-2" onclick="openModal('valorant')">
+            <div class="product-card fade-up delay-3" onclick="openModal('valorant')">
                 <i class="fas fa-crosshairs"></i>
                 <h3>NightFall Valorant Internal</h3>
                 <p class="description">Valorant internal — pixel silent aim, server-side anti-aim, ESP, chams, world customization.</p>
@@ -797,8 +798,7 @@
                 <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
             </div>
 
-            <!-- VGC Emulator -->
-            <div class="product-card fade-up delay-3" onclick="openModal('vgc')">
+            <div class="product-card fade-up delay-1" onclick="openModal('vgc')">
                 <i class="fas fa-microchip"></i>
                 <h3>NightFall VGC Emulator</h3>
                 <p class="description">The #1 VGK + VGC Emulation + Internal Solution. Full motherboard support, optimized for modern Windows.</p>
@@ -807,14 +807,8 @@
                 <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
             </div>
 
-        </div>
-
-        <!-- ===== RUST ===== -->
-        <h3 class="category-title"><i class="fas fa-wrench"></i> Rust</h3>
-        <div class="product-grid">
-
-            <!-- Rust -->
-            <div class="product-card fade-up delay-1" onclick="openModal('rust')">
+            <!-- ===== RUST ===== -->
+            <div class="product-card fade-up delay-2" onclick="openModal('rust')">
                 <i class="fas fa-cog"></i>
                 <h3>NightFall Rust External</h3>
                 <p class="description">Rust external — kernel-level aimbot, ESP, world ESP (loot/ores/animals), exploits (fly, no fall).</p>
@@ -823,14 +817,8 @@
                 <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
             </div>
 
-        </div>
-
-        <!-- ===== APEX ===== -->
-        <h3 class="category-title"><i class="fas fa-robot"></i> Apex Legends</h3>
-        <div class="product-grid">
-
-            <!-- Apex -->
-            <div class="product-card fade-up delay-1" onclick="openModal('apex')">
+            <!-- ===== APEX ===== -->
+            <div class="product-card fade-up delay-3" onclick="openModal('apex')">
                 <i class="fas fa-bolt"></i>
                 <h3>NightFall Apex External</h3>
                 <p class="description">Apex Legends external — kernel-level aimbot, ESP, radar, loot ESP with rarity filters, config system.</p>
@@ -839,13 +827,7 @@
                 <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
             </div>
 
-        </div>
-
-        <!-- ===== DESTINY 2 ===== -->
-        <h3 class="category-title"><i class="fas fa-star"></i> Destiny 2</h3>
-        <div class="product-grid">
-
-            <!-- Destiny 2 Aimbot -->
+            <!-- ===== DESTINY 2 ===== -->
             <div class="product-card fade-up delay-1" onclick="openModal('destinyaimbot')">
                 <i class="fas fa-bullseye"></i>
                 <h3>NightFall Destiny 2 Aimbot</h3>
@@ -855,7 +837,6 @@
                 <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
             </div>
 
-            <!-- Destiny 2 ESP -->
             <div class="product-card fade-up delay-2" onclick="openModal('destinyesp')">
                 <i class="fas fa-eye"></i>
                 <h3>NightFall Destiny 2 ESP</h3>
@@ -866,7 +847,6 @@
             </div>
 
         </div>
-
     </div>
 
     <!-- ===== MODAL ===== -->
@@ -998,7 +978,7 @@
 
         // ===== PRODUCT DATA =====
         const products = {
-            // COD - Internal Chairs
+            // COD Products
             zerox: {
                 name: "BO7/WZ NightFall Internal Chair",
                 icon: "fa-crown",
@@ -1006,10 +986,7 @@
                 pricing: "1 Day: $12 | 1 Week: $27 | 1 Month: $52",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Zerox",
                 description: `BO7/WZ internal chair with silent aim, spin bot, jitter, and full ESP. Dominate every lobby with zero mercy. Works on all Windows, launchers, and CPUs. Spoofer included.`,
-                features: [
-                    { title: "Aimbot", items: ["Silent Aim", "Spin Bot", "Jitter", "Full ESP"] },
-                    { title: "Compatibility", items: ["All Windows versions", "Steam, Battle.Net, GamePass", "AMD & Intel processors", "BO7 + Warzone"] }
-                ]
+                features: [{ title: "Aimbot", items: ["Silent Aim", "Spin Bot", "Jitter", "Full ESP"] }]
             },
             noch: {
                 name: "MW19-B07 NightFall Internal Chair",
@@ -1018,23 +995,16 @@
                 pricing: "1 Day: $12 | 1 Week: $27 | 1 Month: $52",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Noch",
                 description: `MW19-B07 internal chair with silent aim, spin bot, jitter, and full ESP. Works on all Windows, launchers, and CPUs. Spoofer included.`,
-                features: [
-                    { title: "Aimbot", items: ["Silent Aim", "Spin Bot", "Jitter", "Full ESP"] },
-                    { title: "Compatibility", items: ["All Windows versions", "Steam, Battle.Net, GamePass", "AMD & Intel processors", "MW19-B07"] }
-                ]
+                features: [{ title: "Aimbot", items: ["Silent Aim", "Spin Bot", "Jitter", "Full ESP"] }]
             },
-            // COD - External Chairs
             ancient: {
                 name: "BO6-B07 NightFall External Chair",
                 icon: "fa-robot",
                 tag: "External",
                 pricing: "1 Day: $12 | 1 Week: $27 | 1 Month: $52",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Ancient",
-                description: `BO6/BO7/WZ all-in-one cheat with built-in spoofer. Customizable aimbot, ESP with visible/invisible colors, radar system, and full item filtering. Works on all Windows versions, launchers, and processors. Ricochet ready.`,
-                features: [
-                    { title: "Features", items: ["Built-in Spoofer", "Customizable Aimbot", "ESP with Visible/Invisible Colors", "Radar System", "Full Item Filtering", "Ricochet Ready"] },
-                    { title: "Compatibility", items: ["All Windows versions", "Steam, Battle.Net, GamePass", "AMD & Intel processors", "BO6, BO7, Warzone"] }
-                ]
+                description: `BO6/BO7/WZ all-in-one cheat with built-in spoofer. Customizable aimbot, ESP with visible/invisible colors, radar system, and full item filtering. Ricochet ready.`,
+                features: [{ title: "Features", items: ["Built-in Spoofer", "Customizable Aimbot", "ESP with Visible/Invisible Colors", "Radar System", "Full Item Filtering"] }]
             },
             mist: {
                 name: "BO7/WZ NightFall External Chair (Mist)",
@@ -1042,11 +1012,8 @@
                 tag: "External",
                 pricing: "1 Day: $12 | 1 Week: $27 | 1 Month: $52",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Mist",
-                description: `BO7/WZ external cheat with web menu, shareable radar, and built-in spoofer. Access from mobile, desktop, or console. Full aimbot, ESP, lobby stats, and StreamProof. Works on all Windows, launchers, and processors.`,
-                features: [
-                    { title: "Web Features", items: ["Shareable Radar", "Shareable World Map", "Web Menu Interface", "Browser-based Control", "Compatible with mobile, desktop & console"] },
-                    { title: "Aimbot", items: ["Enable/disable", "Native controller support", "Custom aim key", "Adjustable FOV", "Smooth aim", "Prediction"] }
-                ]
+                description: `BO7/WZ external cheat with web menu, shareable radar, and built-in spoofer. Access from any device. StreamProof.`,
+                features: [{ title: "Web Features", items: ["Shareable Radar", "Web Menu Interface", "Browser-based Control", "Compatible with mobile, desktop & console"] }]
             },
             thunex: {
                 name: "BO7/WZ NightFall External Chair (Thunex)",
@@ -1054,11 +1021,8 @@
                 tag: "External",
                 pricing: "1 Day: $12 | 1 Week: $27 | 1 Month: $52",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Thunex",
-                description: `BO7/WZ cheat with TPM + Ranked Spoofer included. Full aimbot with Rage mode, ESP/visuals, shareable radar, and cheater detection. Works on all Windows versions, launchers, and processors. Ricochet ready.`,
-                features: [
-                    { title: "Aimbot", items: ["Enable", "Draw FOV", "Aim Priority", "Aim 360 [RAGE]", "Recoil Helper"] },
-                    { title: "ESP", items: ["Visual ESP", "Player Boxes", "HP Indicator", "Name Tags", "Kill Tags", "Ping Tags"] }
-                ]
+                description: `BO7/WZ cheat with TPM + Ranked Spoofer. Rage mode, ESP, shareable radar, cheater detection. Ricochet ready.`,
+                features: [{ title: "Features", items: ["TPM + Ranked Spoofer", "Rage Mode", "ESP/Visuals", "Shareable Radar", "Cheater Detection"] }]
             },
             zeroaim: {
                 name: "BO7/WZ NightFall External Chair (ZeroAim)",
@@ -1066,11 +1030,8 @@
                 tag: "External",
                 pricing: "1 Day: $12 | 1 Week: $27 | 1 Month: $52",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-ZeroAim",
-                description: `BO7/WZ complete cheat with built-in spoofer. Multiple aimbot modes (ESP Only, Legit, Semi-Legit, Rage), full ESP, shareable radar, item filtering, and 7-slot profile system. Works on all Windows versions, launchers, and processors.`,
-                features: [
-                    { title: "Aimbot Modes", items: ["ESP Only", "Legit", "Semi-Legit", "Rage"] },
-                    { title: "Features", items: ["Built-in Spoofer", "Full ESP", "Shareable Radar", "Item Filtering", "7-Slot Profile System"] }
-                ]
+                description: `BO7/WZ complete cheat with built-in spoofer. 4 aimbot modes, full ESP, shareable radar, 7-slot profiles.`,
+                features: [{ title: "Aimbot Modes", items: ["ESP Only", "Legit", "Semi-Legit", "Rage"] }]
             },
             faculty: {
                 name: "MW19-B07 NightFall External Chair (Faculty)",
@@ -1078,11 +1039,8 @@
                 tag: "External",
                 pricing: "1 Day: $9.50 | 1 Week: $16.00 | 1 Month: $40.00",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Faculty",
-                description: `MW19-BO7 external chair with graph-based aimbot (Easy/Pro modes), full ESP with glow effects, loot filtering across 18 categories, and custom clantag. Supports all titles from MW19 to BO7/WZ. Works on all Windows, launchers, and processors. Spoofer not included.`,
-                features: [
-                    { title: "Aimbot", items: ["Enable", "Aim at: Shoot/Scope", "Visible Only", "Prediction", "Draw FOV"] },
-                    { title: "ESP", items: ["Box", "Health", "Shield", "Skeleton", "Nickname", "Distance", "Weapon"] }
-                ]
+                description: `MW19-BO7 external chair with graph-based aimbot, full ESP with glow effects, 18 loot categories.`,
+                features: [{ title: "Aimbot", items: ["Graph-based aimbot (Easy/Pro modes)", "Full ESP with glow effects", "18 loot categories"] }]
             },
             shield: {
                 name: "BO7/WZ NightFall External Chair (Shield)",
@@ -1090,11 +1048,8 @@
                 tag: "External",
                 pricing: "1 Day: $12 | 1 Week: $27 | 1 Month: $52",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Shield",
-                description: `100% external BO7/WZ cheat with Double Bind System, smooth aim, and full ESP (box, skeleton, radar, health, infinite UAV). Lightweight and effective. Works on all Windows, launchers, and processors. Spoofer not included.`,
-                features: [
-                    { title: "Aimbot", items: ["Double Bind System", "Smooth Control", "Draw FOV", "Bone Selection", "Aim Max Distance"] },
-                    { title: "ESP", items: ["BOX (2D Filled + Corner)", "Lines", "Skeleton", "Names", "Distance", "Radar", "Infinite UAV"] }
-                ]
+                description: `100% external BO7/WZ cheat with Double Bind System, smooth aim, full ESP (box, skeleton, radar, infinite UAV).`,
+                features: [{ title: "Features", items: ["100% External", "Double Bind System", "Smooth Aim", "Full ESP (box, skeleton, radar)", "Infinite UAV"] }]
             },
             progress: {
                 name: "MW19-B07 NightFall External Chair (Progress)",
@@ -1102,11 +1057,8 @@
                 tag: "External",
                 pricing: "1 Day: $11.00 | 1 Week: $25.00 | 1 Month: $45.00",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Progress",
-                description: `MW19-BO7 external chair with TPM Spoofer included. Full aimbot (mouse/controller), ESP with visible/invisible colors, shareable mobile radar, no recoil, triggerbot, and config system. Supports MW19 through BO7/WZ. StreamProof.`,
-                features: [
-                    { title: "Aimbot", items: ["Aim Mode (Mouse/Controller)", "Target Bone", "Aim FOV", "Aim Smoothness", "Prediction"] },
-                    { title: "ESP", items: ["Box ESP", "Skeleton ESP", "Player Name", "Distance", "Health Bar", "Visible/Invisible Color"] }
-                ]
+                description: `MW19-BO7 external chair with TPM Spoofer. Full aimbot, ESP, shareable mobile radar, no recoil. StreamProof.`,
+                features: [{ title: "Features", items: ["TPM Spoofer", "Full aimbot", "ESP with visible/invisible colors", "Shareable mobile radar", "No recoil", "StreamProof"] }]
             },
             lova: {
                 name: "MW3-B07 NightFall External Chair (LOVA)",
@@ -1114,11 +1066,8 @@
                 tag: "External",
                 pricing: "1 Day: $11.00 | 1 Week: $25.00 | 1 Month: $45.00",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-LOVA",
-                description: `MW3-BO7 external chair with TPM Spoofer included and native controller support. Full aimbot, ESP (box, loot, glow, radar), shareable radar, 5 config slots, and full color customization. Supports MW3, BO6, BO7, WZ. StreamProof.`,
-                features: [
-                    { title: "Aimbot", items: ["Native Controller Support", "FOV", "Smoothing", "Aim Distance Slider", "Visibility Check"] },
-                    { title: "ESP", items: ["Player Names", "Weapons", "Distance", "Health Bars", "Loot ESP", "Box ESP", "Radar"] }
-                ]
+                description: `MW3-BO7 external chair with TPM Spoofer and native controller support. Full aimbot, ESP, loot, glow, shareable radar.`,
+                features: [{ title: "Features", items: ["TPM Spoofer", "Native controller support", "Full aimbot", "ESP (box, loot, glow, radar)", "Shareable radar"] }]
             },
             zeroaimbo6: {
                 name: "BO6 NightFall External Chair (ZeroAim)",
@@ -1126,23 +1075,17 @@
                 tag: "External",
                 pricing: "1 Day: $11.00 | 1 Week: $22.00 | 1 Month: $42.00",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-ZeroAim-BO6",
-                description: `BO6-exclusive external chair with built-in spoofer. 4 aimbot modes (ESP Only, Legit, Semi-Legit, Rage), full ESP, shareable radar, item filtering across 12 categories, and 7-slot profile system. Works on all Windows versions, launchers, and processors.`,
-                features: [
-                    { title: "Aimbot Modes", items: ["ESP Only", "Legit", "Semi-Legit", "Rage"] },
-                    { title: "Features", items: ["Built-in Spoofer", "Full ESP", "Shareable Radar", "Item Filtering (12 Categories)", "7-Slot Profile System"] }
-                ]
+                description: `BO6-exclusive external chair with built-in spoofer. 4 aimbot modes, full ESP, shareable radar, item filtering, 7-slot profiles.`,
+                features: [{ title: "Aimbot Modes", items: ["ESP Only", "Legit", "Semi-Legit", "Rage"] }]
             },
-            // COD - Unlock Tools
             unlockbo7wz: {
                 name: "BO7/WZ NightFall Unlock All Tool",
                 icon: "fa-unlock",
                 tag: "Unlock Tool",
                 pricing: "1 Day: $5.00 | 1 Week: $12.00 | 1 Month: $25.00 | Lifetime: $55.00",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Unlock-All-BO7WZ",
-                description: `BO7/WZ unlock all tool — unlock every weapon, camo, blueprint, attachment, store item, and more with one click. Spoofer included. Alt account recommended. Works on all Windows, launchers, and processors.`,
-                features: [
-                    { title: "Unlock Features", items: ["All Weapons", "All Camos", "All Blueprints", "All Attachments", "All Store Items", "All Emblems", "All Calling Cards"] }
-                ]
+                description: `BO7/WZ unlock all — weapons, camos, blueprints, attachments, store items. Spoofer included.`,
+                features: [{ title: "Unlock Features", items: ["All Weapons", "All Camos", "All Blueprints", "All Attachments", "All Store Items"] }]
             },
             unlockbo6: {
                 name: "BO6 NightFall Unlock All Tool",
@@ -1150,10 +1093,8 @@
                 tag: "Unlock Tool",
                 pricing: "1 Day: $5.00 | 1 Week: $12.00 | 1 Month: $25.00 | Lifetime: $55.00",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Unlock-All-BO6",
-                description: `BO6 unlock all tool — unlock every weapon, camo, blueprint, attachment, store item, and more with one click. Spoofer included. Alt account recommended. Works on all Windows, launchers, and processors.`,
-                features: [
-                    { title: "Unlock Features", items: ["All Weapons", "All Camos", "All Blueprints", "All Attachments", "All Store Items", "All Emblems", "All Calling Cards"] }
-                ]
+                description: `BO6 unlock all — weapons, camos, blueprints, attachments, store items. Spoofer included.`,
+                features: [{ title: "Unlock Features", items: ["All Weapons", "All Camos", "All Blueprints", "All Attachments", "All Store Items"] }]
             },
             unlockmw19: {
                 name: "MW19 NightFall Unlock All Tool",
@@ -1161,22 +1102,17 @@
                 tag: "Unlock Tool",
                 pricing: "1 Day: $3.25 | 1 Week: $5.00 | 1 Month: $8.00 | Lifetime: $12.00",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Unlock-All-MW19",
-                description: `MW19 unlock all tool — unlock everything in game with no server checks. Spoofer included. Simple F2 inject + F6 activate. Works on all Windows, launchers, and processors.`,
-                features: [
-                    { title: "Unlock Features", items: ["All Weapons", "All Camos", "All Blueprints", "All Attachments", "All Store Items", "All Emblems", "All Calling Cards"] }
-                ]
+                description: `MW19 unlock all — weapons, camos, blueprints, attachments, store items. F2 inject + F6 activate.`,
+                features: [{ title: "Unlock Features", items: ["All Weapons", "All Camos", "All Blueprints", "All Attachments", "All Store Items"] }]
             },
-            // COD - Zombies
             zombiesunlock: {
                 name: "BOCW NightFall Zombies Unlock-Tool",
                 icon: "fa-skull",
                 tag: "Zombies",
                 pricing: "1 Day: $15.00 | 1 Week: $25.00 | 1 Month: $30.00 | Lifetime: $60.00",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Zombies-Unlock-Tool",
-                description: `BOCW Zombies unlock tool & mod manager — unlock all camos (including Dark Aether), Godmode, speed multiplier, infinite ammo, and more. Skip the grind. Spoofer not required. Works on all Windows, Steam, and Battle.net.`,
-                features: [
-                    { title: "Features", items: ["Unlock All Camos (including Dark Aether)", "Godmode — invincibility", "Speed Multiplier", "Infinite Ammo", "Full control of Zombies experience"] }
-                ]
+                description: `BOCW Zombies unlock tool — Dark Aether camos, Godmode, speed multiplier, infinite ammo. Spoofer not required.`,
+                features: [{ title: "Features", items: ["Unlock All Camos (including Dark Aether)", "Godmode", "Speed Multiplier", "Infinite Ammo"] }]
             },
             loadout: {
                 name: "BOCW NightFall Loadout Editor",
@@ -1184,10 +1120,8 @@
                 tag: "Zombies",
                 pricing: "1 Day: $10.00 | 1 Week: $15.00 | 1 Month: $20.00 | Lifetime: $50.00",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Loadout-Editor",
-                description: `BOCW Zombies loadout editor — add any wonder weapon, unlock any camo (Dark Matter Ultra, Dark Aether, Pack A Punch), save shop blueprints permanently. No more resets. Spoofer not required.`,
-                features: [
-                    { title: "Features", items: ["Add any wonder weapon to Zombies loadout", "Unlock & save any camo", "Save shop blueprints permanently", "Save edits forever — no resets"] }
-                ]
+                description: `BOCW Zombies loadout editor — add any wonder weapon, unlock any camo, save shop blueprints permanently.`,
+                features: [{ title: "Features", items: ["Add any wonder weapon", "Unlock & save any camo", "Save shop blueprints permanently"] }]
             },
             // Spoofers
             permanent: {
@@ -1196,10 +1130,8 @@
                 tag: "Permanent",
                 pricing: "72 Hours: $14.99 | Lifetime: $24.99",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Permanent-Spoofer",
-                description: `Permanent spoofer with full Vanguard support, TPM spoofing, MAC spoofing, SMBIOS fixer, and automated EDID spoofing. Supports locked motherboards (ASUS, HP, Insyde BIOS). Fortnite tournaments supported. Windows 10 & 11. Instant delivery.`,
-                features: [
-                    { title: "Features", items: ["Legit Manufacturer Serials", "Locked Motherboard Support", "Up-to-Date Spoofing Method", "Insyde BIOS Supported", "Permanent MAC Spoofing", "Bypasses Disk Bans", "TPM & Secure Boot Bypass", "Fortnite Tournament Support"] }
-                ]
+                description: `Permanent spoofer with full Vanguard support, TPM spoofing, MAC spoofing, SMBIOS fixer, and automated EDID spoofing. Supports locked motherboards. Fortnite tournaments supported.`,
+                features: [{ title: "Features", items: ["Legit Manufacturer Serials", "Locked Motherboard Support", "Permanent MAC Spoofing", "TPM & Secure Boot Bypass", "Fortnite Tournament Support"] }]
             },
             temporary: {
                 name: "NightFall Temporary Spoofer",
@@ -1207,10 +1139,8 @@
                 tag: "Temporary",
                 pricing: "3 Days: $6.99 | 1 Week: $18.99 | 1 Month: $29.99",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Temporary-Spoofer",
-                description: `One-click temporary spoofer with traces cleaner. Supports locked motherboards (ASUS, HP, Lenovo), all storage types, MAC spoofing, TPM virtualization, and kernel-level serial modification. Tournament ready — Fortnite supported. Windows 10 & 11. Instant delivery.`,
-                features: [
-                    { title: "Features", items: ["One-Click Solution", "Traces Cleaner Included", "Locked Motherboard Support", "SSD / HDD / NVMe Spoofing", "MAC / NIC Spoofing", "TPM Spoofing — Full Virtualization", "Fortnite Tournament Support"] }
-                ]
+                description: `One-click temporary spoofer with traces cleaner. Supports locked motherboards, all storage types, MAC spoofing, TPM virtualization.`,
+                features: [{ title: "Features", items: ["One-Click Solution", "Traces Cleaner", "SSD / HDD / NVMe Spoofing", "MAC / NIC Spoofing", "TPM Spoofing — Full Virtualization"] }]
             },
             // Fortnite
             fortnite: {
@@ -1219,10 +1149,10 @@
                 tag: "External",
                 pricing: "1 Day: $4.99 | 3 Days: $7.99 | 1 Week: $18.99 | 1 Month: $29.99 | 1 Year: $179.99",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Fortnite",
-                description: `Fortnite external cheat with aimbot, ESP, radar, 40+ colors, and config saving. Controller support (PS/XBOX). Undetected & stable. Windows 10 & 11. Instant delivery.`,
+                description: `Fortnite external cheat with aimbot, ESP, radar, 40+ colors, and config saving. Controller support.`,
                 features: [
-                    { title: "Aimbot", items: ["Controller Support (PS/XBOX)", "Target Bone (Head/Neck/Chest/Random)", "Prediction", "Humanization", "FOV (0-500)", "Smooth (1-100)"] },
-                    { title: "Visuals", items: ["Box (Box/Cornered/Filled/Rounded)", "Skeleton", "Snaplines", "Username", "Rank", "Distance", "Weapon", "Kills"] }
+                    { title: "Aimbot", items: ["Controller Support", "Target Bone", "Prediction", "Humanization", "FOV (0-500)", "Smooth (1-100)"] },
+                    { title: "Visuals", items: ["Box", "Skeleton", "Snaplines", "Username", "Rank", "Distance", "Weapon", "Kills"] }
                 ]
             },
             // Valorant
@@ -1232,9 +1162,9 @@
                 tag: "Colorbot",
                 pricing: "3 Days: $7.99 | 1 Week: $17.99 | 1 Month: $29.99 | 1 Year: $89.99",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Private-Colorbot",
-                description: `Private Valorant colorbot — external pixel detection, no memory access. Dual FOV system, triggerbot, recoil control, 5 humanization modes. Stream-proof. Core Isolation (Memory Integrity) required. Windows 10 & 11. Instant delivery.`,
+                description: `Private Valorant colorbot — external pixel detection, no memory access. Dual FOV system, triggerbot, recoil control, 5 humanization modes. Stream-proof.`,
                 features: [
-                    { title: "Aimbot", items: ["Dual FOV System (AimView & Kill Zone)", "Adjustable Smoothing", "Head Offset", "Custom Activation Keybind", "Advanced Humanization (5 Behavior Modes)"] },
+                    { title: "Aimbot", items: ["Dual FOV System", "Adjustable Smoothing", "Head Offset", "Custom Activation Keybind", "Advanced Humanization (5 Modes)"] },
                     { title: "Triggerbot", items: ["FOV X/Y Configuration", "Adjustable Trigger Delay", "Custom Hold Keybind"] }
                 ]
             },
@@ -1244,7 +1174,7 @@
                 tag: "Internal",
                 pricing: "3 Days: $6.99 | 1 Week: $24.99 | 1 Month: $34.99",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Valorant",
-                description: `Valorant internal cheat — pixel silent aim, server-side anti-aim, ESP, chams, world customization, and more. Rage/HvH focused. Using a bypass/emulator is highly recommended. Windows 10 & 11. Instant delivery.`,
+                description: `Valorant internal cheat — pixel silent aim, server-side anti-aim, ESP, chams, world customization, and more. Rage/HvH focused.`,
                 features: [
                     { title: "Aimbot", items: ["Pixel Silent", "360° FOV", "Smooth Aim", "Prediction", "Recoil Control", "No Spread", "Wallbang & Through Smoke"] },
                     { title: "ESP & Visuals", items: ["2D/3D/Corner Box", "Skeleton", "Health Bar", "Distance", "Snaplines", "Agent Name & Icon", "Visible/Invisible Colors"] }
@@ -1256,10 +1186,10 @@
                 tag: "Emulator",
                 pricing: "1 Week: $40.00 | 1 Month: $100.00",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-VGC-Emulator",
-                description: `The #1 VGK + VGC Emulation + Internal Solution on the Market. Experience unrestricted gameplay with the industry's most trusted emulator. Designed to bypass common Valorant restrictions, this tool offers a seamless, stable, and user-friendly experience. Bypasses TPM, Secure Boot, and HVCI checks. No system restart required.`,
+                description: `The #1 VGK + VGC Emulation + Internal Solution. Experience unrestricted gameplay. Bypasses TPM, Secure Boot, and HVCI checks. No system restart required.`,
                 features: [
-                    { title: "Core Advantages", items: ["Full Motherboard Support", "Optimized for Modern Windows (10 & 11, up to 25H2)", "Lightning-Fast Setup"] },
-                    { title: "What You Get", items: ["Eliminates common error codes: VAN 102, VAL 5, VAN 79, VAN 152, VAN 1067", "Operates smoothly alongside Vanguard", "Bypasses TPM, Secure Boot, and HVCI checks", "No system restart required", "Dedicated Sessions for each user"] }
+                    { title: "Core Advantages", items: ["Full Motherboard Support", "Optimized for Windows 10 & 11", "Lightning-Fast Setup"] },
+                    { title: "What You Get", items: ["Eliminates common error codes", "Operates smoothly alongside Vanguard", "Bypasses TPM, Secure Boot, HVCI", "No system restart required"] }
                 ]
             },
             // Rust
@@ -1269,10 +1199,10 @@
                 tag: "External",
                 pricing: "1 Day: $3.99 | 3 Days: $7.99 | 1 Week: $14.99 | 1 Month: $29.99 | 1 Year: $149.99",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Rust",
-                description: `Rust external cheat — kernel-level aimbot (memory/silent), ESP, world ESP (loot/ores/animals), exploits (fly, no fall, spiderman, jesus), and 7 config slots. Undetected & stable. Windows 10 & 11. Instant delivery.`,
+                description: `Rust external cheat — kernel-level aimbot, ESP, world ESP, exploits (fly, no fall, spiderman).`,
                 features: [
-                    { title: "Aimbot", items: ["Aim Type (Memory/Silent/Kernel)", "Target Selection (Head/Body/Closest)", "Smoothness (1-50)", "Prediction", "Hitchance % (Silent)"] },
-                    { title: "Exploits", items: ["Automatic Weapons", "Instant Eoka", "Rapid Fire", "No Recoil", "Infinite Jump", "Spiderman", "No Fall Damage", "Fly Mode"] }
+                    { title: "Aimbot", items: ["Memory/Silent/Kernel Aim", "Smoothness (1-50)", "Prediction", "Hitchance % (Silent)"] },
+                    { title: "Exploits", items: ["Automatic Weapons", "Rapid Fire", "No Recoil", "Infinite Jump", "Spiderman", "Fly Mode"] }
                 ]
             },
             // Apex
@@ -1282,9 +1212,9 @@
                 tag: "External",
                 pricing: "1 Day: $3.99 | 3 Days: $6.99 | 1 Week: $14.99 | 1 Month: $29.99 | 1 Year: $149.99",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Apex",
-                description: `Apex Legends external cheat — kernel-level aimbot, ESP, radar, loot ESP with rarity filters, and config system. Controller support (PS4/XBOX). Undetected & stable. Windows 10 & 11. Instant delivery.`,
+                description: `Apex Legends external cheat — kernel-level aimbot, ESP, radar, loot ESP with rarity filters.`,
                 features: [
-                    { title: "Aimbot", items: ["Visible Check", "Ignore Team", "Target Bone", "Smooth (1-100)", "Accuracy Rate", "Bezier Curve", "Recoil Control", "Controller Support"] },
+                    { title: "Aimbot", items: ["Visible Check", "Ignore Team", "Target Bone", "Smooth (1-100)", "Recoil Control", "Controller Support"] },
                     { title: "ESP", items: ["Name", "Legend", "Skeleton", "Box", "Distance", "Health", "Shield", "Rank", "Weapon"] }
                 ]
             },
@@ -1295,10 +1225,8 @@
                 tag: "Aimbot",
                 pricing: "1 Day: $6.99 | 1 Week: $15.99 | 1 Month: $29.99",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Destiny-2-Aimbot",
-                description: `Destiny 2 external cheat with aimbot, ESP, radar, and full PvE/PvP support. Works on all Windows versions. Undetected & stable. Instant delivery.`,
-                features: [
-                    { title: "Features", items: ["Aimbot", "ESP", "Radar", "Full PvE/PvP Support", "Undetected & Stable"] }
-                ]
+                description: `Destiny 2 external cheat with aimbot, ESP, radar, and full PvE/PvP support. Undetected & stable.`,
+                features: [{ title: "Features", items: ["Aimbot", "ESP", "Radar", "Full PvE/PvP Support", "Undetected & Stable"] }]
             },
             destinyesp: {
                 name: "NightFall Destiny 2 ESP",
@@ -1306,10 +1234,8 @@
                 tag: "ESP",
                 pricing: "1 Day: $4.99 | 1 Week: $11.99 | 1 Month: $22.99",
                 buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Destiny-2-ESP",
-                description: `Destiny 2 ESP tool — full player tracking, loot ESP, radar, and PvP/PvE overlays. Works on all Windows versions. Undetected & stable. Instant delivery.`,
-                features: [
-                    { title: "Features", items: ["Full Player Tracking", "Loot ESP", "Radar", "PvP/PvE Overlays", "Undetected & Stable"] }
-                ]
+                description: `Destiny 2 ESP tool — full player tracking, loot ESP, radar, and PvP/PvE overlays. Undetected & stable.`,
+                features: [{ title: "Features", items: ["Full Player Tracking", "Loot ESP", "Radar", "PvP/PvE Overlays", "Undetected & Stable"] }]
             }
         };
 
