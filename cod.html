@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>NightFall · Call of Duty</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0a0f;
+            color: #f0edf5;
+            line-height: 1.6;
+            overflow-x: hidden;
+            opacity: 0;
+            transition: opacity 0.6s ease-in;
+        }
+        body.loaded { opacity: 1; }
+
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg-glow {
+            position: fixed;
+            top: -20%;
+            left: -10%;
+            width: 70%;
+            height: 80%;
+            background: radial-gradient(ellipse at 30% 20%, rgba(100,40,255,0.25) 0%, transparent 60%);
+            z-index: 0;
+            filter: blur(60px);
+            animation: floatBg 18s ease-in-out infinite alternate;
+        }
+        .bg-glow-2 {
+            position: fixed;
+            bottom: -10%;
+            right: -10%;
+            width: 60%;
+            height: 70%;
+            background: radial-gradient(ellipse at 70% 80%, rgba(180,70,255,0.20) 0%, transparent 55%);
+            z-index: 0;
+            filter: blur(70px);
+            animation: floatBg 22s ease-in-out infinite alternate-reverse;
+        }
+        @keyframes floatBg {
+            0% { transform: translate(0,0) scale(1); }
+            100% { transform: translate(4%,6%) scale(1.05); }
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #14111c; }
+        ::-webkit-scrollbar-thumb { background: #6d3bff; border-radius: 20px; }
+
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+        .section-title { font-size: 2.8rem; font-weight: 700; letter-spacing: -0.02em; background: linear-gradient(135deg, #c6b1ff, #a07aff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; }
+        .category-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 3rem 0 1.5rem;
+            color: #c6b1ff;
+            border-bottom: 1px solid rgba(160,122,255,0.15);
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .category-title i { color: #a07aff; font-size: 1.6rem; }
+
+        nav {
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(11,10,15,0.5);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            transition: background 0.3s ease;
+        }
+        nav.scrolled { background: rgba(11,10,15,0.8); }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+        .logo {
+            font-size: 1.7rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #ddd4ff, #b694ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .logo i { margin-right: 6px; color: #a07aff; -webkit-text-fill-color: #a07aff; }
+        .nav-links { display: flex; gap: 1.8rem; align-items: center; list-style: none; flex-wrap: wrap; }
+        .nav-links a {
+            color: #cbc4dc;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: 0.3s ease;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #7b4aff, #a07aff);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover { color: #d6c8ff; }
+        .nav-links a:hover::after { width: 100%; }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: #14111c;
+            min-width: 160px;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 1rem;
+            padding: 0.5rem 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            z-index: 100;
+            top: 100%;
+            left: 0;
+        }
+        .dropdown-content a {
+            color: #cbc4dc;
+            padding: 0.5rem 1.2rem;
+            display: block;
+            font-size: 0.85rem;
+        }
+        .dropdown-content a:hover { background: rgba(160,122,255,0.08); color: #f0edf5; }
+        .dropdown-content a::after { display: none; }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown > a::after { display: none; }
+
+        .discord-btn {
+            background: #5865F2;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            color: #fff !important;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.25s;
+            font-size: 0.85rem;
+        }
+        .discord-btn::after { display: none; }
+        .discord-btn:hover {
+            background: #6d7af5;
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(88,101,242,0.3);
+        }
+
+        .page-header { padding: 3rem 0 0rem; }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            color: #a07aff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .back-link:hover { color: #c6b1ff; }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7b4aff, #a07aff);
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #fff;
+            transition: 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px -8px rgba(100,40,255,0.3);
+            text-decoration: none;
+            align-self: flex-start;
+            margin-top: auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        .btn-primary:hover::before { left: 100%; }
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 20px 40px -8px rgba(100,40,255,0.5);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 0.5rem 0 2rem;
+        }
+        .product-card {
+            background: rgba(255,255,255,0.02);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 2rem;
+            padding: 1.8rem 1.5rem;
+            transition: 0.4s cubic-bezier(0.2,0.9,0.3,1);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .product-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            border-color: rgba(160,122,255,0.4);
+            box-shadow: 0 25px 50px -12px rgba(100,40,255,0.15);
+        }
+        .product-card i { font-size: 2.5rem; color: #a07aff; margin-bottom: 0.8rem; }
+        .product-card h3 { font-weight: 700; font-size: 1.2rem; margin-bottom: 0.3rem; }
+        .product-card .description { color: #b1aac7; font-size: 0.9rem; margin-bottom: 0.8rem; flex-grow: 1; }
+        .product-tag {
+            display: inline-block;
+            margin: 0.3rem 0 0.8rem;
+            background: rgba(160,122,255,0.12);
+            padding: 0.15rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            color: #c6b1ff;
+            font-weight: 500;
+            align-self: flex-start;
+        }
+        .product-pricing { margin: 0.3rem 0 0.8rem; color: #b1aac7; font-size: 0.85rem; line-height: 1.6; }
+        .product-pricing span { color: #d6c8ff; font-weight: 600; }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(16px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            background: #14111c;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 2.5rem;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2.5rem;
+            position: relative;
+            box-shadow: 0 40px 80px -20px rgba(0,0,0,0.9);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        .modal-close {
+            position: sticky;
+            top: 0;
+            float: right;
+            font-size: 1.8rem;
+            color: #8d85a3;
+            cursor: pointer;
+            transition: 0.2s;
+            background: none;
+            border: none;
+            z-index: 10;
+        }
+        .modal-close:hover { color: #f0edf5; transform: rotate(90deg); }
+        .modal-content .product-icon { font-size: 4rem; color: #a07aff; margin-bottom: 1rem; }
+        .modal-content h2 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .modal-content .modal-tag {
+            display: inline-block;
+            margin: 0.5rem 0 1rem;
+            background: rgba(160,122,255,0.12);
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            color: #c6b1ff;
+            font-weight: 500;
+        }
+        .modal-content .modal-description { color: #b1aac7; font-size: 1.05rem; margin-bottom: 1.5rem; line-height: 1.8; }
+        .modal-content .modal-pricing {
+            background: rgba(255,255,255,0.03);
+            border-radius: 1.2rem;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem 2rem;
+        }
+        .modal-content .modal-pricing span { color: #d6c8ff; font-weight: 600; }
+        .modal-content .modal-pricing .price-item { color: #b1aac7; font-size: 1rem; }
+
+        .feature-section { margin: 1.5rem 0; }
+        .feature-section h4 {
+            color: #c6b1ff;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .feature-section h4 i { color: #a07aff; }
+        .feature-section ul { list-style: none; padding-left: 0; }
+        .feature-section ul li {
+            color: #b1aac7;
+            font-size: 0.95rem;
+            padding: 0.3rem 0 0.3rem 1.8rem;
+            position: relative;
+            line-height: 1.6;
+        }
+        .feature-section ul li::before {
+            content: "▸";
+            color: #a07aff;
+            position: absolute;
+            left: 0;
+        }
+
+        .modal-content::-webkit-scrollbar { width: 4px; }
+        .modal-content::-webkit-scrollbar-track { background: transparent; }
+        .modal-content::-webkit-scrollbar-thumb { background: #6d3bff; border-radius: 20px; }
+
+        /* ===== PAYMENT MODAL ===== */
+        .payment-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(16px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .payment-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .payment-modal {
+            background: #14111c;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 2.5rem;
+            max-width: 550px;
+            width: 100%;
+            padding: 2.5rem;
+            position: relative;
+            box-shadow: 0 40px 80px -20px rgba(0,0,0,0.9);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .payment-overlay.active .payment-modal { transform: scale(1); }
+        .payment-modal::-webkit-scrollbar { width: 4px; }
+        .payment-modal::-webkit-scrollbar-track { background: transparent; }
+        .payment-modal::-webkit-scrollbar-thumb { background: #6d3bff; border-radius: 20px; }
+
+        .payment-close {
+            position: sticky;
+            top: 0;
+            float: right;
+            font-size: 1.8rem;
+            color: #8d85a3;
+            cursor: pointer;
+            transition: 0.2s;
+            background: none;
+            border: none;
+            z-index: 10;
+        }
+        .payment-close:hover { color: #f0edf5; transform: rotate(90deg); }
+        .payment-modal h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+        .payment-modal .total {
+            color: #a07aff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        .payment-option {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 1.2rem;
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            transition: 0.3s ease;
+            cursor: pointer;
+        }
+        .payment-option:hover {
+            border-color: rgba(160,122,255,0.3);
+            background: rgba(255,255,255,0.06);
+            transform: translateX(4px);
+        }
+        .payment-option i {
+            font-size: 1.8rem;
+            width: 2.5rem;
+            color: #a07aff;
+        }
+        .payment-option .info h4 {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .payment-option .info p {
+            color: #8d85a3;
+            font-size: 0.85rem;
+        }
+        .payment-option .badge {
+            margin-left: auto;
+            background: rgba(160,122,255,0.12);
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            color: #c6b1ff;
+            white-space: nowrap;
+        }
+        .payment-secure {
+            text-align: center;
+            margin-top: 1.2rem;
+            color: #67607a;
+            font-size: 0.85rem;
+        }
+        .payment-secure i { color: #4ade80; margin-right: 0.3rem; }
+
+        /* ===== DISCORD WIDGET ===== */
+        #discord-widget {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+            background: #2c2f33;
+            border-radius: 1.2rem;
+            padding: 0.8rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border: 1px solid rgba(255,255,255,0.06);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        #discord-widget:hover {
+            transform: scale(1.05);
+            border-color: #5865F2;
+        }
+        #discord-widget i {
+            font-size: 2rem;
+            color: #5865F2;
+        }
+        #discord-widget .discord-info .status {
+            color: #4ade80;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        #discord-widget .discord-info .status::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        #discord-widget .discord-info p {
+            color: #f0edf5;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        footer { padding: 2rem 0; text-align: center; color: #67607a; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.03); }
+        footer a { color: #a07aff; text-decoration: none; transition: 0.2s; }
+        footer a:hover { color: #c6b1ff; }
+        footer .footer-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        footer .footer-links a { color: #8d85a3; font-size: 0.85rem; }
+        footer .footer-links a:hover { color: #c6b1ff; }
+
+        @media (max-width: 900px) {
+            .section-title { font-size: 2.2rem; }
+            .nav-links { gap: 1rem; }
+            .category-title { font-size: 1.6rem; }
+        }
+        @media (max-width: 600px) {
+            .container { padding: 0 1.2rem; }
+            .nav-links { display: none; }
+            .product-grid { grid-template-columns: 1fr; }
+            .modal-content { padding: 1.5rem; margin: 1rem; }
+            .page-header { padding: 2rem 0 0.5rem; }
+            .payment-modal { padding: 1.5rem; margin: 1rem; }
+            #discord-widget { bottom: 1rem; right: 1rem; padding: 0.6rem 1rem; }
+            #discord-widget i { font-size: 1.5rem; }
+            #discord-widget .discord-info p { font-size: 0.8rem; }
+            footer .footer-links { gap: 1rem; }
+            footer .footer-links a { font-size: 0.75rem; }
+            .category-title { font-size: 1.3rem; }
+            .dropdown-content { left: -60px; min-width: 140px; }
+        }
+
+        .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.7s cubic-bezier(0.2,0.9,0.3,1), transform 0.7s cubic-bezier(0.2,0.9,0.3,1); }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+    </style>
+</head>
+<body>
+    <canvas id="particles-canvas"></canvas>
+    <div class="bg-glow"></div>
+    <div class="bg-glow-2"></div>
+
+    <a href="https://discord.gg/NsKZASjYT4" target="_blank" id="discord-widget">
+        <i class="fab fa-discord"></i>
+        <div class="discord-info">
+            <p>Join our Discord</p>
+            <span class="status">Live support</span>
+        </div>
+    </a>
+
+    <nav>
+        <div class="container nav-inner">
+            <div class="logo"><i class="fas fa-moon"></i> NightFall</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Shop <i class="fas fa-chevron-down" style="font-size:0.6rem; margin-left:4px;"></i></a>
+                    <div class="dropdown-content">
+                        <a href="cod.html">⚔️ Call of Duty</a>
+                        <a href="spoofers.html">🛡️ Spoofers</a>
+                        <a href="fortnite.html">🎯 Fortnite</a>
+                        <a href="valorant.html">🎯 Valorant</a>
+                        <a href="rust.html">⚙️ Rust</a>
+                        <a href="apex.html">🤖 Apex Legends</a>
+                        <a href="destiny2.html">⭐ Destiny 2</a>
+                        <a href="shop.html">📦 All Products</a>
+                    </div>
+                </li>
+                <li><a href="reviews.html">Reviews</a></li>
+                <li><a href="tos.html">TOS</a></li>
+                <li><a href="refund.html">Refund</a></li>
+                <li><a href="https://discord.gg/NsKZASjYT4" target="_blank" class="discord-btn"><i class="fab fa-discord"></i> Discord</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="page-header container">
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        <h2 class="section-title">Call of Duty</h2>
+        <p style="color:#a29bb5; font-size:1.1rem;">Premium cheats for BO6, BO7, Warzone, MW19, MW3, and more.</p>
+    </section>
+
+    <div class="container">
+        <div class="product-grid">
+
+            <!-- Zerox -->
+            <div class="product-card fade-up delay-1" onclick="openModal('zerox')">
+                <i class="fas fa-crown"></i>
+                <h3>BO7/WZ NightFall Internal Chair</h3>
+                <p class="description">BO7/WZ internal chair with built-in spoofer. Silent aim, spin bot, jitter, full ESP.</p>
+                <span class="product-tag">Internal</span>
+                <div class="product-pricing"><span>1 Day:</span> $12 &nbsp;|&nbsp; <span>1 Week:</span> $27 &nbsp;|&nbsp; <span>1 Month:</span> $52</div>
+                <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
+            </div>
+
+            <!-- Noch -->
+            <div class="product-card fade-up delay-2" onclick="openModal('noch')">
+                <i class="fas fa-crown"></i>
+                <h3>MW19-B07 NightFall Internal Chair</h3>
+                <p class="description">MW19-B07 internal chair with silent aim, spin bot, jitter, full ESP.</p>
+                <span class="product-tag">Internal</span>
+                <div class="product-pricing"><span>1 Day:</span> $12 &nbsp;|&nbsp; <span>1 Week:</span> $27 &nbsp;|&nbsp; <span>1 Month:</span> $52</div>
+                <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
+            </div>
+
+            <!-- Ancient -->
+            <div class="product-card fade-up delay-3" onclick="openModal('ancient')">
+                <i class="fas fa-robot"></i>
+                <h3>BO6-B07 NightFall External Chair</h3>
+                <p class="description">BO6/BO7/WZ all-in-one cheat with built-in spoofer. Aimbot, ESP, radar, item filtering. Ricochet ready.</p>
+                <span class="product-tag">External</span>
+                <div class="product-pricing"><span>1 Day:</span> $12 &nbsp;|&nbsp; <span>1 Week:</span> $27 &nbsp;|&nbsp; <span>1 Month:</span> $52</div>
+                <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
+            </div>
+
+            <!-- Mist -->
+            <div class="product-card fade-up delay-1" onclick="openModal('mist')">
+                <i class="fas fa-cloud"></i>
+                <h3>BO7/WZ NightFall External Chair (Mist)</h3>
+                <p class="description">BO7/WZ external cheat with web menu, shareable radar, built-in spoofer. StreamProof.</p>
+                <span class="product-tag">External</span>
+                <div class="product-pricing"><span>1 Day:</span> $12 &nbsp;|&nbsp; <span>1 Week:</span> $27 &nbsp;|&nbsp; <span>1 Month:</span> $52</div>
+                <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
+            </div>
+
+            <!-- Thunex -->
+            <div class="product-card fade-up delay-2" onclick="openModal('thunex')">
+                <i class="fas fa-bolt"></i>
+                <h3>BO7/WZ NightFall External Chair (Thunex)</h3>
+                <p class="description">BO7/WZ cheat with TPM + Ranked Spoofer. Rage mode, ESP, shareable radar, cheater detection.</p>
+                <span class="product-tag">External</span>
+                <div class="product-pricing"><span>1 Day:</span> $12 &nbsp;|&nbsp; <span>1 Week:</span> $27 &nbsp;|&nbsp; <span>1 Month:</span> $52</div>
+                <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
+            </div>
+
+            <!-- ZeroAim -->
+            <div class="product-card fade-up delay-3" onclick="openModal('zeroaim')">
+                <i class="fas fa-bullseye"></i>
+                <h3>BO7/WZ NightFall External Chair (ZeroAim)</h3>
+                <p class="description">BO7/WZ complete cheat with built-in spoofer. 4 aimbot modes, full ESP, shareable radar.</p>
+                <span class="product-tag">External</span>
+                <div class="product-pricing"><span>1 Day:</span> $12 &nbsp;|&nbsp; <span>1 Week:</span> $27 &nbsp;|&nbsp; <span>1 Month:</span> $52</div>
+                <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
+            </div>
+
+            <!-- Faculty -->
+            <div class="product-card fade-up delay-1" onclick="openModal('faculty')">
+                <i class="fas fa-graduation-cap"></i>
+                <h3>MW19-B07 NightFall External Chair (Faculty)</h3>
+                <p class="description">MW19-BO7 external chair with graph-based aimbot, full ESP with glow effects, 18 loot categories.</p>
+                <span class="product-tag">External</span>
+                <div class="product-pricing"><span>1 Day:</span> $9.50 &nbsp;|&nbsp; <span>1 Week:</span> $16.00 &nbsp;|&nbsp; <span>1 Month:</span> $40.00</div>
+                <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
+            </div>
+
+            <!-- Shield -->
+            <div class="product-card fade-up delay-2" onclick="openModal('shield')">
+                <i class="fas fa-shield-alt"></i>
+                <h3>BO7/WZ NightFall External Chair (Shield)</h3>
+                <p class="description">100% external BO7/WZ cheat with Double Bind System, smooth aim, full ESP (box, skeleton, radar).</p>
+                <span class="product-tag">External</span>
+                <div class="product-pricing"><span>1 Day:</span> $12 &nbsp;|&nbsp; <span>1 Week:</span> $27 &nbsp;|&nbsp; <span>1 Month:</span> $52</div>
+                <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
+            </div>
+
+            <!-- Progress -->
+            <div class="product-card fade-up delay-3" onclick="openModal('progress')">
+                <i class="fas fa-chart-line"></i>
+                <h3>MW19-B07 NightFall External Chair (Progress)</h3>
+                <p class="description">MW19-BO7 external chair with TPM Spoofer. Full aimbot, ESP, shareable mobile radar, no recoil.</p>
+                <span class="product-tag">External</span>
+                <div class="product-pricing"><span>1 Day:</span> $11.00 &nbsp;|&nbsp; <span>1 Week:</span> $25.00 &nbsp;|&nbsp; <span>1 Month:</span> $45.00</div>
+                <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
+            </div>
+
+            <!-- LOVA -->
+            <div class="product-card fade-up delay-1" onclick="openModal('lova')">
+                <i class="fas fa-heart"></i>
+                <h3>MW3-B07 NightFall External Chair (LOVA)</h3>
+                <p class="description">MW3-BO7 external chair with TPM Spoofer and native controller support. Full aimbot, ESP, loot, glow.</p>
+                <span class="product-tag">External</span>
+                <div class="product-pricing"><span>1 Day:</span> $11.00 &nbsp;|&nbsp; <span>1 Week:</span> $25.00 &nbsp;|&nbsp; <span>1 Month:</span> $45.00</div>
+                <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
+            </div>
+
+            <!-- ZeroAim BO6 -->
+            <div class="product-card fade-up delay-2" onclick="openModal('zeroaimbo6')">
+                <i class="fas fa-bullseye"></i>
+                <h3>BO6 NightFall External Chair (ZeroAim)</h3>
+                <p class="description">BO6-exclusive external chair with built-in spoofer. 4 aimbot modes, full ESP, shareable radar.</p>
+                <span class="product-tag">External</span>
+                <div class="product-pricing"><span>1 Day:</span> $11.00 &nbsp;|&nbsp; <span>1 Week:</span> $22.00 &nbsp;|&nbsp; <span>1 Month:</span> $42.00</div>
+                <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
+            </div>
+
+            <!-- Unlock All BO7/WZ -->
+            <div class="product-card fade-up delay-3" onclick="openModal('unlockbo7wz')">
+                <i class="fas fa-unlock"></i>
+                <h3>BO7/WZ NightFall Unlock All Tool</h3>
+                <p class="description">BO7/WZ unlock all — weapons, camos, blueprints, attachments, store items. Spoofer included.</p>
+                <span class="product-tag">Unlock Tool</span>
+                <div class="product-pricing"><span>1 Day:</span> $5.00 &nbsp;|&nbsp; <span>1 Week:</span> $12.00 &nbsp;|&nbsp; <span>1 Month:</span> $25.00 &nbsp;|&nbsp; <span>Lifetime:</span> $55.00</div>
+                <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
+            </div>
+
+            <!-- Unlock All BO6 -->
+            <div class="product-card fade-up delay-1" onclick="openModal('unlockbo6')">
+                <i class="fas fa-unlock"></i>
+                <h3>BO6 NightFall Unlock All Tool</h3>
+                <p class="description">BO6 unlock all — weapons, camos, blueprints, attachments, store items. Spoofer included.</p>
+                <span class="product-tag">Unlock Tool</span>
+                <div class="product-pricing"><span>1 Day:</span> $5.00 &nbsp;|&nbsp; <span>1 Week:</span> $12.00 &nbsp;|&nbsp; <span>1 Month:</span> $25.00 &nbsp;|&nbsp; <span>Lifetime:</span> $55.00</div>
+                <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
+            </div>
+
+            <!-- Unlock All MW19 -->
+            <div class="product-card fade-up delay-2" onclick="openModal('unlockmw19')">
+                <i class="fas fa-unlock"></i>
+                <h3>MW19 NightFall Unlock All Tool</h3>
+                <p class="description">MW19 unlock all — weapons, camos, blueprints, attachments, store items. F2 inject + F6 activate.</p>
+                <span class="product-tag">Unlock Tool</span>
+                <div class="product-pricing"><span>1 Day:</span> $3.25 &nbsp;|&nbsp; <span>1 Week:</span> $5.00 &nbsp;|&nbsp; <span>1 Month:</span> $8.00 &nbsp;|&nbsp; <span>Lifetime:</span> $12.00</div>
+                <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
+            </div>
+
+            <!-- Zombies Unlock-Tool -->
+            <div class="product-card fade-up delay-3" onclick="openModal('zombiesunlock')">
+                <i class="fas fa-skull"></i>
+                <h3>BOCW NightFall Zombies Unlock-Tool</h3>
+                <p class="description">BOCW Zombies unlock tool — Dark Aether camos, Godmode, speed multiplier, infinite ammo.</p>
+                <span class="product-tag">Zombies</span>
+                <div class="product-pricing"><span>1 Day:</span> $15.00 &nbsp;|&nbsp; <span>1 Week:</span> $25.00 &nbsp;|&nbsp; <span>1 Month:</span> $30.00 &nbsp;|&nbsp; <span>Lifetime:</span> $60.00</div>
+                <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
+            </div>
+
+            <!-- Loadout Editor -->
+            <div class="product-card fade-up delay-1" onclick="openModal('loadout')">
+                <i class="fas fa-edit"></i>
+                <h3>BOCW NightFall Loadout Editor</h3>
+                <p class="description">BOCW Zombies loadout editor — add any wonder weapon, unlock any camo, save shop blueprints.</p>
+                <span class="product-tag">Zombies</span>
+                <div class="product-pricing"><span>1 Day:</span> $10.00 &nbsp;|&nbsp; <span>1 Week:</span> $15.00 &nbsp;|&nbsp; <span>1 Month:</span> $20.00 &nbsp;|&nbsp; <span>Lifetime:</span> $50.00</div>
+                <span style="color:#a07aff; font-size:0.85rem; margin-top:0.3rem;">Click for details →</span>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== MODAL ===== -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- ===== PAYMENT MODAL ===== -->
+    <div class="payment-overlay" id="paymentModal">
+        <div class="payment-modal">
+            <button class="payment-close" onclick="closePayment()">✕</button>
+            <h2>Choose payment method</h2>
+            <div class="total">Total: <span id="payment-total">$9.99</span></div>
+
+            <div class="payment-option" onclick="selectPayment('Moneymotion', 'Card to Crypto')">
+                <i class="fas fa-exchange-alt"></i>
+                <div class="info">
+                    <h4>Moneymotion</h4>
+                    <p>Connect your Moneymotion account (card to crypto). Requires specialized onboarding.</p>
+                </div>
+                <span class="badge">CRYPTO</span>
+            </div>
+
+            <div class="payment-option" onclick="selectPayment('PayPal F&F', 'PayPal Friends & Family')">
+                <i class="fab fa-paypal"></i>
+                <div class="info">
+                    <h4>PayPal Friends & Family (IPN)</h4>
+                    <p>Use PayPal IPN for receiving F&F or G&S payments.</p>
+                </div>
+                <span class="badge">PAYPAL</span>
+            </div>
+
+            <div class="payment-option" onclick="selectPayment('Stripe', 'Stripe')">
+                <i class="fas fa-credit-card"></i>
+                <div class="info">
+                    <h4>Stripe</h4>
+                    <p>Connect your Stripe account.</p>
+                </div>
+                <span class="badge">CARD</span>
+            </div>
+
+            <div class="payment-option" onclick="selectPayment('Sumup', 'Sumup')">
+                <i class="fas fa-mobile-alt"></i>
+                <div class="info">
+                    <h4>Sumup</h4>
+                    <p>Connect your Sumup account.</p>
+                </div>
+                <span class="badge">POS</span>
+            </div>
+
+            <div class="payment-option" onclick="selectPayment('Square', 'Square')">
+                <i class="fab fa-square"></i>
+                <div class="info">
+                    <h4>Square</h4>
+                    <p>Connect your Square account.</p>
+                </div>
+                <span class="badge">POS</span>
+            </div>
+
+            <div class="payment-option" onclick="selectPayment('Cryptomus', 'Cryptomus')">
+                <i class="fas fa-coins"></i>
+                <div class="info">
+                    <h4>Cryptomus</h4>
+                    <p>Connect your Cryptomus account.</p>
+                </div>
+                <span class="badge">CRYPTO</span>
+            </div>
+
+            <div class="payment-option" onclick="selectPayment('PayPal API', 'PayPal API')">
+                <i class="fab fa-paypal"></i>
+                <div class="info">
+                    <h4>PayPal by API</h4>
+                    <p>Connect PayPal's G&S API.</p>
+                </div>
+                <span class="badge">PAYPAL</span>
+            </div>
+
+            <div class="payment-option" onclick="selectPayment('Cash App', 'Cash App')">
+                <i class="fas fa-dollar-sign"></i>
+                <div class="info">
+                    <h4>Cash App</h4>
+                    <p>Connect your Cash App account.</p>
+                </div>
+                <span class="badge">APP</span>
+            </div>
+
+            <div class="payment-option" onclick="selectPayment('Customer Balance', 'Store Credit')">
+                <i class="fas fa-wallet"></i>
+                <div class="info">
+                    <h4>Customer Balance</h4>
+                    <p>Enable store credit / account balances for customers.</p>
+                </div>
+                <span class="badge">CREDIT</span>
+            </div>
+
+            <div class="payment-secure">
+                <i class="fas fa-lock"></i> Secure payment – your information is encrypted
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="reviews.html">Reviews</a>
+                <a href="tos.html">Terms of Service</a>
+                <a href="refund.html">Refund Policy</a>
+                <a href="https://discord.gg/NsKZASjYT4" target="_blank">Discord</a>
+            </div>
+            <p>© 2026 <a href="index.html">NightFall Services</a> — built with <i class="fas fa-heart" style="color:#a07aff;"></i></p>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('load', function() {
+            document.body.classList.add('loaded');
+        });
+
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+
+        // ===== PRODUCT DATA =====
+        const products = {
+            zerox: {
+                name: "BO7/WZ NightFall Internal Chair",
+                icon: "fa-crown",
+                tag: "Internal",
+                pricing: "1 Day: $12 | 1 Week: $27 | 1 Month: $52",
+                buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Zerox",
+                description: `BO7/WZ internal chair with silent aim, spin bot, jitter, and full ESP. Dominate every lobby with zero mercy. Works on all Windows, launchers, and CPUs. Spoofer included.`,
+                features: [{ title: "Aimbot", items: ["Silent Aim", "Spin Bot", "Jitter", "Full ESP"] }]
+            },
+            noch: {
+                name: "MW19-B07 NightFall Internal Chair",
+                icon: "fa-crown",
+                tag: "Internal",
+                pricing: "1 Day: $12 | 1 Week: $27 | 1 Month: $52",
+                buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Noch",
+                description: `MW19-B07 internal chair with silent aim, spin bot, jitter, and full ESP. Works on all Windows, launchers, and CPUs. Spoofer included.`,
+                features: [{ title: "Aimbot", items: ["Silent Aim", "Spin Bot", "Jitter", "Full ESP"] }]
+            },
+            ancient: {
+                name: "BO6-B07 NightFall External Chair",
+                icon: "fa-robot",
+                tag: "External",
+                pricing: "1 Day: $12 | 1 Week: $27 | 1 Month: $52",
+                buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Ancient",
+                description: `BO6/BO7/WZ all-in-one cheat with built-in spoofer. Customizable aimbot, ESP with visible/invisible colors, radar system, and full item filtering. Ricochet ready.`,
+                features: [{ title: "Features", items: ["Built-in Spoofer", "Customizable Aimbot", "ESP with Visible/Invisible Colors", "Radar System", "Full Item Filtering"] }]
+            },
+            mist: {
+                name: "BO7/WZ NightFall External Chair (Mist)",
+                icon: "fa-cloud",
+                tag: "External",
+                pricing: "1 Day: $12 | 1 Week: $27 | 1 Month: $52",
+                buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Mist",
+                description: `BO7/WZ external cheat with web menu, shareable radar, and built-in spoofer. Access from any device. StreamProof.`,
+                features: [{ title: "Web Features", items: ["Shareable Radar", "Web Menu Interface", "Browser-based Control", "Compatible with mobile, desktop & console"] }]
+            },
+            thunex: {
+                name: "BO7/WZ NightFall External Chair (Thunex)",
+                icon: "fa-bolt",
+                tag: "External",
+                pricing: "1 Day: $12 | 1 Week: $27 | 1 Month: $52",
+                buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Thunex",
+                description: `BO7/WZ cheat with TPM + Ranked Spoofer. Rage mode, ESP, shareable radar, cheater detection. Ricochet ready.`,
+                features: [{ title: "Features", items: ["TPM + Ranked Spoofer", "Rage Mode", "ESP/Visuals", "Shareable Radar", "Cheater Detection"] }]
+            },
+            zeroaim: {
+                name: "BO7/WZ NightFall External Chair (ZeroAim)",
+                icon: "fa-bullseye",
+                tag: "External",
+                pricing: "1 Day: $12 | 1 Week: $27 | 1 Month: $52",
+                buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-ZeroAim",
+                description: `BO7/WZ complete cheat with built-in spoofer. 4 aimbot modes, full ESP, shareable radar, 7-slot profiles.`,
+                features: [{ title: "Aimbot Modes", items: ["ESP Only", "Legit", "Semi-Legit", "Rage"] }]
+            },
+            faculty: {
+                name: "MW19-B07 NightFall External Chair (Faculty)",
+                icon: "fa-graduation-cap",
+                tag: "External",
+                pricing: "1 Day: $9.50 | 1 Week: $16.00 | 1 Month: $40.00",
+                buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Faculty",
+                description: `MW19-BO7 external chair with graph-based aimbot, full ESP with glow effects, 18 loot categories.`,
+                features: [{ title: "Aimbot", items: ["Graph-based aimbot (Easy/Pro modes)", "Full ESP with glow effects", "18 loot categories"] }]
+            },
+            shield: {
+                name: "BO7/WZ NightFall External Chair (Shield)",
+                icon: "fa-shield-alt",
+                tag: "External",
+                pricing: "1 Day: $12 | 1 Week: $27 | 1 Month: $52",
+                buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Shield",
+                description: `100% external BO7/WZ cheat with Double Bind System, smooth aim, full ESP (box, skeleton, radar, infinite UAV).`,
+                features: [{ title: "Features", items: ["100% External", "Double Bind System", "Smooth Aim", "Full ESP (box, skeleton, radar)", "Infinite UAV"] }]
+            },
+            progress: {
+                name: "MW19-B07 NightFall External Chair (Progress)",
+                icon: "fa-chart-line",
+                tag: "External",
+                pricing: "1 Day: $11.00 | 1 Week: $25.00 | 1 Month: $45.00",
+                buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Progress",
+                description: `MW19-BO7 external chair with TPM Spoofer. Full aimbot, ESP, shareable mobile radar, no recoil. StreamProof.`,
+                features: [{ title: "Features", items: ["TPM Spoofer", "Full aimbot", "ESP with visible/invisible colors", "Shareable mobile radar", "No recoil", "StreamProof"] }]
+            },
+            lova: {
+                name: "MW3-B07 NightFall External Chair (LOVA)",
+                icon: "fa-heart",
+                tag: "External",
+                pricing: "1 Day: $11.00 | 1 Week: $25.00 | 1 Month: $45.00",
+                buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-LOVA",
+                description: `MW3-BO7 external chair with TPM Spoofer and native controller support. Full aimbot, ESP, loot, glow, shareable radar.`,
+                features: [{ title: "Features", items: ["TPM Spoofer", "Native controller support", "Full aimbot", "ESP (box, loot, glow, radar)", "Shareable radar"] }]
+            },
+            zeroaimbo6: {
+                name: "BO6 NightFall External Chair (ZeroAim)",
+                icon: "fa-bullseye",
+                tag: "External",
+                pricing: "1 Day: $11.00 | 1 Week: $22.00 | 1 Month: $42.00",
+                buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-ZeroAim-BO6",
+                description: `BO6-exclusive external chair with built-in spoofer. 4 aimbot modes, full ESP, shareable radar, item filtering, 7-slot profiles.`,
+                features: [{ title: "Aimbot Modes", items: ["ESP Only", "Legit", "Semi-Legit", "Rage"] }]
+            },
+            unlockbo7wz: {
+                name: "BO7/WZ NightFall Unlock All Tool",
+                icon: "fa-unlock",
+                tag: "Unlock Tool",
+                pricing: "1 Day: $5.00 | 1 Week: $12.00 | 1 Month: $25.00 | Lifetime: $55.00",
+                buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Unlock-All-BO7WZ",
+                description: `BO7/WZ unlock all — weapons, camos, blueprints, attachments, store items. Spoofer included.`,
+                features: [{ title: "Unlock Features", items: ["All Weapons", "All Camos", "All Blueprints", "All Attachments", "All Store Items"] }]
+            },
+            unlockbo6: {
+                name: "BO6 NightFall Unlock All Tool",
+                icon: "fa-unlock",
+                tag: "Unlock Tool",
+                pricing: "1 Day: $5.00 | 1 Week: $12.00 | 1 Month: $25.00 | Lifetime: $55.00",
+                buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Unlock-All-BO6",
+                description: `BO6 unlock all — weapons, camos, blueprints, attachments, store items. Spoofer included.`,
+                features: [{ title: "Unlock Features", items: ["All Weapons", "All Camos", "All Blueprints", "All Attachments", "All Store Items"] }]
+            },
+            unlockmw19: {
+                name: "MW19 NightFall Unlock All Tool",
+                icon: "fa-unlock",
+                tag: "Unlock Tool",
+                pricing: "1 Day: $3.25 | 1 Week: $5.00 | 1 Month: $8.00 | Lifetime: $12.00",
+                buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Unlock-All-MW19",
+                description: `MW19 unlock all — weapons, camos, blueprints, attachments, store items. F2 inject + F6 activate.`,
+                features: [{ title: "Unlock Features", items: ["All Weapons", "All Camos", "All Blueprints", "All Attachments", "All Store Items"] }]
+            },
+            zombiesunlock: {
+                name: "BOCW NightFall Zombies Unlock-Tool",
+                icon: "fa-skull",
+                tag: "Zombies",
+                pricing: "1 Day: $15.00 | 1 Week: $25.00 | 1 Month: $30.00 | Lifetime: $60.00",
+                buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Zombies-Unlock-Tool",
+                description: `BOCW Zombies unlock tool — Dark Aether camos, Godmode, speed multiplier, infinite ammo. Spoofer not required.`,
+                features: [{ title: "Features", items: ["Unlock All Camos (including Dark Aether)", "Godmode", "Speed Multiplier", "Infinite Ammo"] }]
+            },
+            loadout: {
+                name: "BOCW NightFall Loadout Editor",
+                icon: "fa-edit",
+                tag: "Zombies",
+                pricing: "1 Day: $10.00 | 1 Week: $15.00 | 1 Month: $20.00 | Lifetime: $50.00",
+                buyLink: "https://night-fall-services.sellhub.cx/product/NightFall-Loadout-Editor",
+                description: `BOCW Zombies loadout editor — add any wonder weapon, unlock any camo, save shop blueprints permanently.`,
+                features: [{ title: "Features", items: ["Add any wonder weapon", "Unlock & save any camo", "Save shop blueprints permanently"] }]
+            }
+        };
+
+        // ===== MODAL =====
+        function openModal(id) {
+            const p = products[id];
+            if (!p) return;
+            const modal = document.getElementById('modal');
+            const body = document.getElementById('modal-body');
+
+            let featuresHTML = '';
+            if (p.features) {
+                p.features.forEach(f => {
+                    featuresHTML += `<div class="feature-section"><h4><i class="fas fa-chevron-circle-right"></i> ${f.title}</h4><ul>`;
+                    f.items.forEach(item => { featuresHTML += `<li>${item}</li>`; });
+                    featuresHTML += `</ul></div>`;
+                });
+            }
+
+            body.innerHTML = `
+                <i class="fas ${p.icon} product-icon"></i>
+                <h2>${p.name}</h2>
+                <span class="modal-tag">${p.tag}</span>
+                <p class="modal-description">${p.description}</p>
+                <div class="modal-pricing">
+                    <div class="price-item"><span>Pricing:</span> ${p.pricing}</div>
+                </div>
+                ${featuresHTML}
+                <a href="#" onclick="openPayment('${p.buyLink}', '${p.pricing}')" class="btn-primary" style="margin-top: 0.5rem;">
+                    Buy Now →
+                </a>
+            `;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // ===== PAYMENT MODAL =====
+        let paymentProductLink = '';
+
+        function openPayment(link, price) {
+            paymentProductLink = link;
+            document.getElementById('payment-total').textContent = price || '$9.99';
+            document.getElementById('paymentModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePayment() {
+            document.getElementById('paymentModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function selectPayment(method, name) {
+            const url = paymentProductLink + '?payment=' + encodeURIComponent(method);
+            window.open(url, '_blank');
+            closePayment();
+        }
+
+        document.getElementById('paymentModal').addEventListener('click', function(e) {
+            if (e.target === this) closePayment();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closePayment();
+        });
+
+        // ===== FADE-UP =====
+        const faders = document.querySelectorAll('.fade-up');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        faders.forEach(el => observer.observe(el));
+
+        // ===== PARTICLES =====
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouseX = 0, mouseY = 0;
+        let animationId;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+                this.opacity = Math.random() * 0.5 + 0.2;
+                this.pulse = Math.random() * Math.PI * 2;
+                this.pulseSpeed = Math.random() * 0.02 + 0.01;
+            }
+            update() {
+                this.pulse += this.pulseSpeed;
+                const currentOpacity = this.opacity + Math.sin(this.pulse) * 0.1;
+                const dx = mouseX - this.x;
+                const dy = mouseY - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 200) {
+                    const force = (200 - dist) / 200 * 0.3;
+                    this.x -= (dx / dist) * force;
+                    this.y -= (dy / dist) * force;
+                }
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(160, 122, 255, ${Math.max(0.1, currentOpacity)})`;
+                ctx.fill();
+            }
+        }
+
+        const particleCount = Math.min(120, Math.floor(window.innerWidth * 0.1));
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+        document.addEventListener('mouseleave', () => {
+            mouseX = -1000;
+            mouseY = -1000;
+        });
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => p.update());
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120) {
+                        const opacity = (1 - dist / 120) * 0.15;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(160, 122, 255, ${opacity})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+            animationId = requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // ===== CURSOR GLOW =====
+        const glow = document.createElement('div');
+        glow.style.cssText = 'position:fixed;width:300px;height:300px;background:radial-gradient(circle,rgba(140,80,255,0.08) 0%,transparent 70%);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);z-index:999;transition:opacity 0.2s;will-change:left,top;';
+        document.body.appendChild(glow);
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+        document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; });
+        document.addEventListener('mouseenter', () => { glow.style.opacity = '1'; });
+    </script>
+</body>
+</html>
