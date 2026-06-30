@@ -1394,12 +1394,9 @@
         };
 
         // ===== MODAL =====
-        let currentProductId = null;
-
         function openModal(id) {
             const p = products[id];
             if (!p) return;
-            currentProductId = id;
             const modal = document.getElementById('modal');
             const body = document.getElementById('modal-body');
 
@@ -1447,10 +1444,6 @@
                 </a>
             `;
 
-            // Store selected duration in modal
-            modal.dataset.selectedDuration = firstKey;
-            modal.dataset.selectedPrice = firstPrice;
-
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -1466,10 +1459,6 @@
             if (display) {
                 display.innerHTML = `<span>Selected:</span> ${duration} — $${price.toFixed(2)}`;
             }
-
-            const modal = document.getElementById('modal');
-            modal.dataset.selectedDuration = duration;
-            modal.dataset.selectedPrice = price;
         }
 
         function closeModal() {
@@ -1500,7 +1489,7 @@
         }
 
         function selectPayment(method, name) {
-            // Just open the product link directly (Sellhub handles payment selection internally)
+            // Direct link to product page (Sellhub handles payment)
             window.open(paymentProductLink, '_blank');
             closePayment();
         }
